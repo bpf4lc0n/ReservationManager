@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.DomainLayer", "Res.Doma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.Infra.DataLayer", "Res.Infra.DataLayer\Res.Infra.DataLayer.csproj", "{806A19B0-5407-43F6-8DC9-19E5F1062228}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.ApplicationLayer", "Res.ApplicationLayer\Res.ApplicationLayer.csproj", "{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{806A19B0-5407-43F6-8DC9-19E5F1062228}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{806A19B0-5407-43F6-8DC9-19E5F1062228}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{806A19B0-5407-43F6-8DC9-19E5F1062228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
