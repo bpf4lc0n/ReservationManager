@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Res.Infra.DataLayer.Context;
+using Microsoft.EntityFrameworkCore;
+using Res.InfraIoCLayer;
+using System;
 
 namespace Res.AspAngular
 {
@@ -20,12 +24,21 @@ namespace Res.AspAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<ReservationDbContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("Res.Infra.DataLayer")));
+
+            // Add cors
+            services.AddCors();
+
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,8 +81,15 @@ namespace Res.AspAngular
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    // Increase the timeout if angular app is taking longer to startup
+                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(180);
                 }
             });
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependendyContainer.RegisterServices(services);
         }
     }
 }

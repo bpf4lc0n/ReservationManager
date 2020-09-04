@@ -18,7 +18,7 @@ namespace Res.Infra.DataLayer.Repositories
         /// <summary>
         /// 
         /// </summary>
-        private ReservationDbContext _context;
+        private readonly ReservationDbContext _context;
 
         public CustomerRespository(ReservationDbContext cdb)
         {

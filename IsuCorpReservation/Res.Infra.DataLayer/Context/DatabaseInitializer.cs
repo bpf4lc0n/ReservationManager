@@ -90,7 +90,6 @@ namespace Res.Infra.DataLayer.Context
                 Restaurant rest_1 = new Restaurant
                 {
                     Name = "Second Dock",
-                    Description = "Second Dock",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
@@ -98,7 +97,6 @@ namespace Res.Infra.DataLayer.Context
                 Restaurant rest_2 = new Restaurant
                 {
                     Name = "Primer Puerto",
-                    Description = "A true man's choice",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
@@ -106,7 +104,6 @@ namespace Res.Infra.DataLayer.Context
                 Restaurant rest_3 = new Restaurant
                 {
                     Name = "Stella",
-                    Description = "Second Dock",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
@@ -114,7 +111,6 @@ namespace Res.Infra.DataLayer.Context
                 Restaurant rest_4 = new Restaurant
                 {
                     Name = "Islan Creek",
-                    Description = "A true man's choice",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
@@ -122,7 +118,6 @@ namespace Res.Infra.DataLayer.Context
                 Restaurant rest_5 = new Restaurant
                 {
                     Name = "Fogo de Chao",
-                    Description = "A true man's choice",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
