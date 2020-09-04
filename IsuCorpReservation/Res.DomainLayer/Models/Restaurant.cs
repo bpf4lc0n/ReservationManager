@@ -13,14 +13,30 @@ using System.Threading.Tasks;
 
 namespace Res.DomainLayer.Models
 {
+    /// <summary>
+    /// Restaurat Model
+    /// </summary>
     public class Restaurant : AuditableEntity
     {
+        /// <summary>
+        /// Restaurant Id
+        /// </summary>
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        /// <summary>
+        /// Restaurant Name
+        /// </summary>
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        [Column(TypeName = "nchar(50)")]
+        public string Name { get; set; }      
+        /// <summary>
+        /// Restaurant representative icon
+        /// </summary>
         public string Icon { get; set; }    
+        /// <summary>
+        /// Reserve made on this restaurant
+        /// </summary>
         public ICollection<Reserve> ReserveDetails { get; set; }
     }
 }
