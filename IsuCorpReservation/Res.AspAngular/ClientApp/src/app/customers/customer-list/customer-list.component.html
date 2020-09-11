@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-4">
+        <h1 style="color:red">Customers List</h1>
+    </div>
+    <div class="col-md-4">
+        <h6 style="color:grey">Lorem ipsun Lorem ipsum dolor sit amet consectetur 
+            adipisicing elit. Aspernatur ipsam quam sed autem dolore vel, 
+            alias tenetur, dignissimos tempore, rem quod totam?</h6>
+    </div>
+    <div class="col-md-2">
+        <button 
+            class="btn btn-accept" 
+            routerLink="/customer-create" 
+            type="submit"
+            style="color:white; background-color:grey">Create customer</button>
+    </div>    
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12">        
+        <app-customer-item 
+            *ngFor="let customerItem of customers"
+            [customer]="customerItem"
+        >
+        </app-customer-item>
+    </div>
+</div>

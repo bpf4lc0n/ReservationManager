@@ -1,0 +1,45 @@
+<form [formGroup]="customerService.form" class="normal-form">
+    <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="80px">
+        <mat-grid-tile>
+            <div class="container">
+                <input type="hidden" formControlName="$key">
+                <mat-form-field appearance="outline">
+                    <input formControlName="fc_name" matInput placeholder="Contact Name ...">
+                    <mat-icon matPrefix>supervisor_account</mat-icon>
+                </mat-form-field>                           
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="container">
+                <mat-form-field appearance="outline">
+                    <mat-icon matPrefix>language</mat-icon>
+                    <mat-select formControlName="fc_contacttype" appearance="outline">                            
+                        <mat-option *ngFor="let cType of ctTypes" [value]="cType.Name">
+                        {{cType.Name}}                        
+                        </mat-option>
+                    </mat-select>    
+                </mat-form-field>     
+            </div>
+        </mat-grid-tile>            
+        <mat-grid-tile>
+            <div class="container">
+                <mat-form-field appearance="outline">
+                    <input formControlName="fc_Telephone" matInput placeholder="Phone">
+                    <mat-icon matPrefix>phone</mat-icon>
+                </mat-form-field>           
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="container">
+                <mat-form-field color="accent" appearance="outline">
+                    <input formControlName="fc_Birthday" matInput [matDatepicker]="picker2" placeholder="Birth Date">                        
+                    <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                </mat-form-field>                        
+            </div>
+        </mat-grid-tile>            
+    </mat-grid-list>
+    <div class="container">
+        <ckeditor data="Keep that Noise Down"></ckeditor>
+    </div>
+</form>

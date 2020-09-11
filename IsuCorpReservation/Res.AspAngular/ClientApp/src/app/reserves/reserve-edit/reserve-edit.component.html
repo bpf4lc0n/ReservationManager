@@ -1,0 +1,36 @@
+    <h1>{{reserve.Customer.Name}}</h1>
+    <div class="row">
+        <div class="col-mod-12">
+            <hr>
+            <div class="form">            
+                <div class="row">                    
+                    <div class="col-mod-3 form-group" > 
+                        <input                        
+                            type="datetime-local" 
+                            class="form-control"
+                            id="date"
+                            placeholder="Reserve's Date"
+                            [ngModel]="reserve.Date"
+                            (ngModelChange)="reserve.Date=$event">
+                    </div>
+                    <div class="col-mod-3 form-group" >
+                        <input                          
+                            type="text" 
+                            id="restaurant"
+                            placeholder="Restaurant name" 
+                            class="form-control"
+                            [(ngModel)]="reserve.Restaurant.Name">
+                    </div>
+                </div>   
+                <div class="row">
+                    <div class="col-mod-12">
+                        <button 
+                            class="btn btn-success" 
+                            type="submit" 
+                            style="background-color:red; border-color: red"
+                            >SEND</button>
+                    </div>               
+                </div>         
+            </div>
+        </div>
+    </div>
