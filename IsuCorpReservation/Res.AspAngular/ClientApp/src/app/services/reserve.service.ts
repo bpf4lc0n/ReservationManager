@@ -1,7 +1,11 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Reserve } from "../models/reserve.model";
 
+@Injectable({
+    providedIn : 'root',
+})
 export class ReserveService{
     reservesChanged = new Subject<Reserve[]>();
     reserveSelected = new Subject<Reserve>();
@@ -19,8 +23,8 @@ export class ReserveService{
 
     form : FormGroup = new FormGroup({
         $key : new FormControl(null),
-        fc_Restaurant : new FormControl(''),
-        fc_Date : new FormControl(new Date())
+        fc_Restaurant : new FormControl('', Validators.required),
+        fc_Date : new FormControl(new Date(), Validators.required)
     })
     
     getReserves()
@@ -30,6 +34,14 @@ export class ReserveService{
 
     getReserve(id:number){
         return this.reserves[id];
+    }
+
+    initializeFormGroup(){
+        this.form.setValue({
+            $key : null,
+            fc_Restaurant : "",
+            fc_Date : new Date()
+        });
     }
 
     getReserveDefault(){

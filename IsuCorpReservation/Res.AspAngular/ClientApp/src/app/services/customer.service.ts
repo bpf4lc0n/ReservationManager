@@ -1,6 +1,6 @@
 import { Customer } from "../models/customer.model";
 import { Subject } from "rxjs";
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 export class CustomerService{
     customerChanged = new Subject<Customer[]>();
@@ -13,10 +13,10 @@ export class CustomerService{
 
     form : FormGroup = new FormGroup({
         $key : new FormControl(null),
-        fc_name : new FormControl(''),
-        fc_contacttype : new FormControl(''),
-        fc_Birthday : new FormControl(new Date()),
-        fc_Telephone : new FormControl(''),
+        fc_name : new FormControl('', Validators.required),
+        fc_contacttype : new FormControl('', Validators.required),
+        fc_Birthday : new FormControl(new Date(), Validators.required),
+        fc_Telephone : new FormControl('', [Validators.required, Validators.minLength(8)]),
         fc_Description : new FormControl('')
     })
 

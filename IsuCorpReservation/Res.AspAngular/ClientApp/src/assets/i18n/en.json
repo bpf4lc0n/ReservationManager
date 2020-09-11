@@ -19,5 +19,7 @@
     "Add Favorites" : "Add Favorites",
     "Clients" : "Clients",
     "List" : "List",
-    "New" : "New"
+    "New" : "New",
+    ".error" : "This field is mandatory",
+    "CLEAR" : "CLEAR"
 }

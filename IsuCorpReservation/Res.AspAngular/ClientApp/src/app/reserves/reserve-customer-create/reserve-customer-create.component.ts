@@ -37,9 +37,14 @@ export class ReserveCustomerCreateComponent implements OnInit {
   onAddReserve() {
     this.reserveService.addReserve(this.reserve);
     this.reserve = this.reserveService.getReserveDefault();
-}
+   }
 
-getColAdjusment():number{
-  return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
- }
+  onClear(){
+     this.reserveService.form.reset();
+     this.reserveService.initializeFormGroup();
+  }
+
+  getColAdjusment():number{
+   return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
+  }
 }

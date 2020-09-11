@@ -6,6 +6,7 @@
                 <mat-form-field appearance="outline">
                     <input formControlName="fc_name" matInput placeholder="Contact Name ...">
                     <mat-icon matPrefix>supervisor_account</mat-icon>
+                    <mat-error translate>.error</mat-error>
                 </mat-form-field>                           
             </div>
         </mat-grid-tile>
@@ -18,7 +19,8 @@
                         {{cType.Name}}                        
                         </mat-option>
                     </mat-select>    
-                </mat-form-field>     
+                </mat-form-field>  
+                <mat-error translate>.error</mat-error>   
             </div>
         </mat-grid-tile>            
         <mat-grid-tile>
@@ -26,7 +28,8 @@
                 <mat-form-field appearance="outline">
                     <input formControlName="fc_Telephone" matInput placeholder="Phone">
                     <mat-icon matPrefix>phone</mat-icon>
-                </mat-form-field>           
+                </mat-form-field>  
+                <mat-error translate>.error</mat-error>         
             </div>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -35,7 +38,8 @@
                     <input formControlName="fc_Birthday" matInput [matDatepicker]="picker2" placeholder="Birth Date">                        
                     <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2 color="primary"></mat-datepicker>
-                </mat-form-field>                        
+                </mat-form-field>  
+                <!-- <mat-error *ngIf="service.form.controls['fc_Birthday'].errors?.required" translate>.error</mat-error>  -->
             </div>
         </mat-grid-tile>            
     </mat-grid-list>
