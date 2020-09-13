@@ -12,10 +12,40 @@ namespace Res.Infra.DataLayer.Repositories
 {
     public class RestaurantRespository : IRestaurantRepository
     {
-        private ReservationDbContext _context;
+        private readonly ReservationDbContext _context;
         public RestaurantRespository(ReservationDbContext dbCtx)
         {          
              _context = dbCtx;  
+        }
+
+        public void Add(Restaurant entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<Restaurant> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Restaurant> Find(Expression<Func<Restaurant, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Restaurant Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Restaurant> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -64,6 +94,31 @@ namespace Res.Infra.DataLayer.Repositories
             }
 
             return restaurant;
+        }
+
+        public Restaurant GetSingleOrDefault(Expression<Func<Restaurant, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Restaurant entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveRange(IEnumerable<Restaurant> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Restaurant entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRange(IEnumerable<Restaurant> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

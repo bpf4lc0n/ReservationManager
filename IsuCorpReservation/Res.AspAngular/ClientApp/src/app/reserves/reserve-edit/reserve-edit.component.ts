@@ -16,12 +16,14 @@ export class ReserveEditComponent implements OnInit {
               private route: ActivatedRoute) {     
   }
 
-  ngOnInit() {     
+  ngOnInit() {  
+    /*   
     this.route.params.subscribe(
       (param : Params) =>{
         this.id = +param['id'];
         this.reserve = this.reserveService.getReserve(this.id);
       }
     );  
+    */
   }
 }

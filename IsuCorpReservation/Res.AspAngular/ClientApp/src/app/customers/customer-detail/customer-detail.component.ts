@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ContactType } from 'src/app/models/contacttype.model';
+import { CustomerType } from 'src/app/models/contacttype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
 import { Customer} from '../../models/customer.model';
 import { CustomerService } from '../../services/customer.service';
@@ -11,7 +11,7 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CustomerDetailComponent implements OnInit {
  @Input() customer : Customer;
- ctTypes : ContactType[];
+ ctTypes : CustomerType[];
 
   constructor(private customerService : CustomerService,  private ctTypeService : ContactTypeService) { }
 

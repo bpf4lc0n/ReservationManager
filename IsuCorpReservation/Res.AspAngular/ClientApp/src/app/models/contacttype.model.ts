@@ -1,9 +1,13 @@
-export class ContactType{
+export class CustomerType{
     public Id : number;
-    public Name : string = '';
+    public ContactType : string = '';
+    public UpdateDate : Date;   
+    public CreatedDate : Date;
 
     constructor(name : string)
     {
-        this.Name = name;
+        this.ContactType = name;
+        this.UpdateDate = new Date();
+        this.CreatedDate = new Date();
     }
 }

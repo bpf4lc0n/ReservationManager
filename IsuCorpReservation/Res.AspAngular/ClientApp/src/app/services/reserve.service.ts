@@ -1,42 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Reserve } from "../models/reserve.model";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GetReserveOutput } from '../models/getReserveOutput.model.';
 
 @Injectable({
     providedIn : 'root',
 })
 export class ReserveService{
-    reservesChanged = new Subject<Reserve[]>();
-    reserveSelected = new Subject<Reserve>();
-    reserves: Reserve[] = [
-        new Reserve(new Date(), 'Porto Rest', 'Joan', '(000) 00 000 000', new Date(), '...'),
-        new Reserve(new Date(), 'Fish  & Ships', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Solari', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Chinese', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Spartans foon', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Taste and relax', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Ice cream delicious', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Colonial flavour', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan'),
-        new Reserve(new Date(), 'Meet, meet and more meet for all the family ', 'Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan')
-    ];
+    getReserveOutput: GetReserveOutput;
+    appUrl : string;  
+    httpOptions = {
+        headers : new HttpHeaders({
+            'Content-Type' : 'application-json'
+        })
+    };
 
     form : FormGroup = new FormGroup({
         $key : new FormControl(null),
         fc_Restaurant : new FormControl('', Validators.required),
         fc_Date : new FormControl(new Date(), Validators.required)
     })
+
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.appUrl = baseUrl;  
+  }    
     
-    getReserves()
-    {
-        return this.reserves.slice();
+    getReserves() : Observable<GetReserveOutput> {
+        return this.http.get<GetReserveOutput>(this.appUrl+'Reserves');
     }
 
-    getReserve(id:number){
-        return this.reserves[id];
+    create() : Observable<GetReserveOutput>{
+        return this.http.post<GetReserveOutput>(this.appUrl + 'Reserves/NewReserve', JSON.stringify() , this.httpOptions).pipe;
     }
 
-    initializeFormGroup(){
+    initializeFormGroup() {
         this.form.setValue({
             $key : null,
             fc_Restaurant : "",
@@ -46,14 +45,5 @@ export class ReserveService{
 
     getReserveDefault(){
         return new Reserve(new Date(2020, 9, 17, 10, 0, 0, 0), '-', '-', '(000) 00 000 000', new Date(), '...');
-    }
-
-    addReserve(reserve : Reserve){
-        this.reserves.push(reserve);
-        this.reservesChanged.next(this.reserves.slice());
-    }
-
-    deleteSelectedReserve(){
-        
     }
 }

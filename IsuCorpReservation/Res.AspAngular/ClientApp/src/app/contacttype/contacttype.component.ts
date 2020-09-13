@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactType } from '../models/contacttype.model';
+import { CustomerType } from '../models/contacttype.model';
 import { ContactTypeService } from '../services/contacttype.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ContactTypeService } from '../services/contacttype.service';
   //styleUrls: ['./contact-type.component.less']
 })
 export class ContactTypeComponent implements OnInit {
-    contactTypes : ContactType[];
+    contactTypes : CustomerType[];
 
   constructor(private contacttypeService : ContactTypeService) { }
 

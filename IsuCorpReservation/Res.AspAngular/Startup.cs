@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Res.Infra.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Res.InfraIoCLayer;
 using System;
+using Res.Infra.DataLayer;
 
 namespace Res.AspAngular
 {

@@ -8,7 +8,7 @@ namespace Res.DomainLayer.Interfaces
     /// <summary>
     /// Interface for <seealso cref="Res.Infra.DataLayer.Repositories.CustomerTypeRespository"/>
     /// </summary>
-    public interface ICustomerTypeRepository
+    public interface ICustomerTypeRepository : IRepository<CustomerType>
     {
         IEnumerable<CustomerType> GetAllCustomerTypeData();
     }

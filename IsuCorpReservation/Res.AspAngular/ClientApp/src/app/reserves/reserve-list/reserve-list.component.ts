@@ -4,6 +4,7 @@ import { ReserveService } from '../../services/reserve.service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import {Sort} from '@angular/material/sort';
+import { GetReserveOutput } from 'src/app/models/getReserveOutput.model.';
 
 @Component({
   selector: 'app-reserve-list',
@@ -11,11 +12,14 @@ import {Sort} from '@angular/material/sort';
   styleUrls: ['./reserve-list.component.css']
 })
 export class ReserveListComponent implements OnInit, OnDestroy {
-  reserves : Reserve[];
+  getReserveOutput : GetReserveOutput;  
+  Reserves : Reserve[];
   sortedData: Reserve[];
+
   selectedColumn : string;
   pos : number;
   dataSource: MatTableDataSource<Reserve>;
+
   columnDefinitions = [
     { def: 'Icon', showMobile: false },
     { def: 'Restaurant', showMobile: true },
@@ -24,32 +28,33 @@ export class ReserveListComponent implements OnInit, OnDestroy {
     { def: 'Edit', showMobile: true },
     ];
 
-  private igChangeSub : Subscription;
-
-  @ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
+  //@ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static:false}) sort: MatSort;
 
-  constructor(private reserveService : ReserveService) { }
+  constructor(private reserveService : ReserveService) { 
+    this.getReserves();
+  }
 
   ngOnInit() {
-    this.reserves = this.reserveService.getReserves();
-    this.igChangeSub = this.reserveService.reservesChanged.subscribe(
-      (reserves : Reserve[]) => { this.reserves = reserves }
-    )
-    this.dataSource = new MatTableDataSource(this.reserves);
+    
+  }
+
+  getReserves() {
+    this.reserveService.getReserves().subscribe(data => {this.getReserveOutput = data; console.log('data', data); console.log('data', data.reserves);
+    console.log('reserves', this.getReserveOutput); console.log('reserves', this.getReserveOutput.reserves)});
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }  
 
   ngOnDestroy() : void {
-      this.igChangeSub.unsubscribe();
+      
   }
 
   onFavorite(res : Reserve){
-    res.Favorite = !res.Favorite;
+    res.FavoriteStatus = !res.FavoriteStatus;
   }
 
   onRate(res : Reserve, value : number){

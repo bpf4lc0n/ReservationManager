@@ -8,14 +8,14 @@ import { ReserveStartComponent } from "./reserves/reserve-start/reserve-start.co
 import { ReserveEditComponent } from "./reserves/reserve-edit/reserve-edit.component";
 
 const appRoutes : Routes =[
-    { path: '', redirectTo: '/reserves', pathMatch: 'full' }, 
-    { path: 'reserves', component: ReservesComponent, children :[
+    { path: '', redirectTo: '/reserves-list', pathMatch: 'full' }, 
+    { path: 'reserves-list', component: ReservesComponent, children :[
         { path: '', component: ReserveStartComponent},  
         { path: 'new', component: ReserveCustomerCreateComponent}, 
         { path: ':id', component: ReserveEditComponent},
         { path: ':id/edit', component: ReserveEditComponent}
     ]},
-    { path: 'customers', component: CustomersComponent},
+    { path: 'customers-list', component: CustomersComponent},
     { path: 'reserve-create', component: ReserveCustomerCreateComponent},
     { path: 'customer-create', component: CustomerDetailComponent}
 ];

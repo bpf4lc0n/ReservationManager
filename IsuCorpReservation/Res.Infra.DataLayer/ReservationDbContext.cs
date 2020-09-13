@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Res.Infra.DataLayer.Context
+namespace Res.Infra.DataLayer
 {
     public class ReservationDbContext : DbContext
     {
@@ -18,7 +18,7 @@ namespace Res.Infra.DataLayer.Context
         public DbSet<Reserve> Reserves { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerType> CustomerTypes { get; set; }
-        public DbSet<Restaurant> Restaurants { get; set; }           
-        
+        public DbSet<Restaurant> Restaurants { get; set; }
+
     }
 }

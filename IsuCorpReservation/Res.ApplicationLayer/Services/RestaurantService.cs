@@ -1,5 +1,4 @@
 ﻿using Res.ApplicationLayer.Interfaces;
-using Res.ApplicationLayer.ViewModels;
 using Res.DomainLayer.Interfaces;
 
 using System;
@@ -13,7 +12,8 @@ namespace Res.ApplicationLayer.Services
     /// </summary>
     public class RestaurantService : IRestaurantService
     {
-        private IRestaurantRepository _iRestaurantRepository;
+        private readonly IRestaurantRepository _iRestaurantRepository;
+
         /// <summary>
         /// 
         /// </summary>
@@ -21,18 +21,12 @@ namespace Res.ApplicationLayer.Services
         public RestaurantService(IRestaurantRepository iRestaurantRepository)
         {
             _iRestaurantRepository = iRestaurantRepository;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public RestaurantViewModel GetRestaurants()
+        }       
+
+        GetRestaurantOutput IRestaurantService.GetRestaurants()
         {
-            RestaurantViewModel value = new RestaurantViewModel
-            {
-                Restaurants = _iRestaurantRepository.GetAllRestaurantData()
-            };
-            return value;
+            var values = _iRestaurantRepository.GetAllRestaurantData();
+            return new GetRestaurantOutput { restaurants = values };
         }
     }
 }

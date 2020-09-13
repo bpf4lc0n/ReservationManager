@@ -9,8 +9,8 @@ namespace Res.ApplicationLayer.Interfaces
     /// <summary>
     /// 
     /// </summary>
-    public interface IRestaurantService : IApplicationService
+    public interface ICustomerTypeService : IApplicationService
     {
-        GetRestaurantOutput GetRestaurants();
+        GetCustomerTypeOutput GetCustomerTypes();
     }
 }

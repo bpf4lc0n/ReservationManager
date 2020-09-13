@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { Reserve } from '../../models/reserve.model';
 import { ReserveService } from '../../services/reserve.service';
-import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -18,25 +17,11 @@ export class ReserveCustomerCreateComponent implements OnInit {
     private reserveService : ReserveService,         
     private route : ActivatedRoute) { }
 
-  ngOnInit() {
-    
-
-    this.route.params.subscribe(
-      (param : Params) =>{
-        this.id = +param['id'];
-        this.editMode = param['id'] != null;
-        this.reserve = this.reserveService.getReserve(this.id);
-      }
-    );  
-    
-    if(!this.reserve) {
-      this.reserve = this.reserveService.getReserveDefault();
-    }    
+  ngOnInit() {     
   }
 
   onAddReserve() {
-    this.reserveService.addReserve(this.reserve);
-    this.reserve = this.reserveService.getReserveDefault();
+    
    }
 
   onClear(){

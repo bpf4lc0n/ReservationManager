@@ -1,11 +1,11 @@
-import { ContactType } from "../models/contacttype.model";
+import { CustomerType } from "../models/contacttype.model";
 
 export class ContactTypeService{
 
-    private types : ContactType[] = [
-        new ContactType('Type 1'),
-        new ContactType('Type 2'),
-        new ContactType('Type 3')
+    private types : CustomerType[] = [
+        new CustomerType('Type 1'),
+        new CustomerType('Type 2'),
+        new CustomerType('Type 3')
       ]
 
     getContactType(){

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Res.Infra.DataLayer.Context;
+using Res.Infra.DataLayer;
 
 namespace Res.Infra.DataLayer.Migrations
 {
@@ -40,11 +40,11 @@ namespace Res.Infra.DataLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nchar(50)");
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nchar(15)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -75,7 +75,7 @@ namespace Res.Infra.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerType");
+                    b.ToTable("CustomerTypes");
                 });
 
             modelBuilder.Entity("Res.DomainLayer.Models.Reserve", b =>
@@ -93,6 +93,9 @@ namespace Res.Infra.DataLayer.Migrations
 
                     b.Property<DateTime>("DateReserve")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("FavoriteStatus")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Ranking")
                         .HasColumnType("int");
@@ -122,15 +125,12 @@ namespace Res.Infra.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Icon")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");

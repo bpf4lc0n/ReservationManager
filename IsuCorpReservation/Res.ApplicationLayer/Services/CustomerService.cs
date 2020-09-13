@@ -1,5 +1,5 @@
-﻿using Res.ApplicationLayer.Interfaces;
-using Res.ApplicationLayer.ViewModels;
+﻿using Abp.Application.Services;
+using Res.ApplicationLayer.Interfaces;
 using Res.DomainLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Res.ApplicationLayer.Services
     /// <summary>
     /// 
     /// </summary>
-    public class CustomerService : ICustomerService
+    public class CustomerService : ApplicationService, ICustomerService
     {
         private readonly ICustomerRepository _iCustomerRepository;
         /// <summary>
@@ -21,17 +21,26 @@ namespace Res.ApplicationLayer.Services
         {
             _iCustomerRepository = iCustomerRepository;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public CustomerViewModel GetCustomers()
+
+        public void CreateCustomer(CreateCustomerInput input)
         {
-            CustomerViewModel value = new CustomerViewModel
-            {
-                Customers = _iCustomerRepository.GetAllCustomersData()
-            };
-            return value;
+            throw new NotImplementedException();
+        }
+
+        public GetCustomerOutput GetCustomer(GetCustomerInput input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GetCustomerOutput GetCustomers()
+        {
+            var values = _iCustomerRepository.GetAllCustomersData();
+            return new GetCustomerOutput() { customers = values };
+        }
+
+        public void UpdateCustomer(UpdateCustomerInput input)
+        {
+            throw new NotImplementedException();
         }
     }
 }

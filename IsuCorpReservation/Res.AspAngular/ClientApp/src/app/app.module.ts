@@ -27,7 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule} from '@angular/material';
+import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule, MatProgressBarModule} from '@angular/material';
 import { ReserveEditDialog } from './reserves/reserve-edit-dialog/reserve-edit-dialog';
 import { ReserveEditDialogItem } from "./reserves/reserve-edit-dialog/reserve-edit-dialog-item";
 
@@ -79,6 +79,7 @@ import { HeaderMenuComponent } from './header/header-menu.component';
     MatToolbarModule,
     MatMenuModule,
     MatDialogModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatCardModule,

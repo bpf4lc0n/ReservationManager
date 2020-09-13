@@ -8,7 +8,7 @@ namespace Res.DomainLayer.Interfaces
     /// <summary>
     /// ResturantReporsitory's Interface
     /// </summary>
-    public interface IRestaurantRepository
+    public interface IRestaurantRepository : IRepository<Restaurant>
     {
         /// <summary>
         /// Get all Restaurant, without dependencys
