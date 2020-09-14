@@ -3,6 +3,7 @@
 // ISU Corp Reservation
 // =============================
 
+using Res.DomainLayer.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,14 +17,8 @@ namespace Res.DomainLayer.Models
     /// <summary>
     /// Customer entity model
     /// </summary>
-    public class Customer : AuditableEntity
+    public class Customer : Entity
     {
-        /// <summary>
-        /// ID value
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         /// <summary>
         /// Customer name
         /// </summary>

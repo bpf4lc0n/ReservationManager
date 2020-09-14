@@ -1,117 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Res.ApplicationLayer.Interfaces;
-using Res.ApplicationLayer.Services;
-using Res.DomainLayer.Models;
-using Res.Infra.DataLayer;
+using Res.ApplicationLayer.Models;
+using Res.AspAngular.ViewModels;
 
 namespace Res.AspAngular.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class ReservesController : ControllerBase
     {
-        private readonly ReservationDbContext _context;
+        private readonly IReserveService _reserveAppService;
+        private readonly ICustomerService _customerAppService;
+        private readonly ILogger<ReservesController> _logger;
+        private readonly IMapper _mapper;
 
-        private readonly IReserveService _iReserveService;
-
-        public ReservesController(IReserveService iReserveService)
+        public ReservesController(IReserveService reserveAppService, ICustomerService customerAppService, IMapper mapper, ILogger<ReservesController> logger)
         {
-            _iReserveService = iReserveService;
+            _reserveAppService = reserveAppService ?? throw new ArgumentNullException(nameof(reserveAppService));
+            _reserveAppService = reserveAppService ?? throw new ArgumentNullException(nameof(reserveAppService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         // GET: api/Reserves
         [HttpGet]
-        public GetReserveOutput GetReserves()
+        public async Task<IEnumerable<ReserveViewModel>> GetReserves()
         {
-            var values = _iReserveService.GetReserves();
-            return values;
+            var list = await _reserveAppService.GetReserveList();
+            var mapped = _mapper.Map<IEnumerable<ReserveViewModel>>(list);
+            return mapped;
         }
 
         // GET: api/Reserves/5
         [HttpGet("{id}")]
-        public GetReserveOutput GetReserve(int id)
+        public async Task<ReserveViewModel> GetReserve(int id)
         {
-            var reserve = _iReserveService.GetReserve(new GetReserveInput() {ReserveId = id });
-            return reserve;
-        }
-
-        public void UpdateReserveFavorietStatus(int id, bool state)
-        {
-            _iReserveService.UpdateReserveFavorietStatus(id, state);
-        }
-
-        [HttpPut("Ranking")]
-        public void UpdateReserveRanking(int id, int ranking)
-        {
-            _iReserveService.UpdateReserveRanking(id, ranking);
+            var Reserve = await _reserveAppService.GetReserveById(id);
+            var mapped = _mapper.Map<ReserveViewModel>(Reserve);
+            return mapped;
         }
 
         // PUT: api/Reserves/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("{id}")]
-        public async Task<IActionResult> PutReserve(int id, Reserve reserve)
+        [HttpPut("{id}")]
+        async Task PutReserve(ReserveViewModel reserve)
         {
-            if (id != reserve.Id)
-            {
-                return BadRequest();
-            }
+            var mapped = _mapper.Map<ReserveModel>(reserve);
+            if (mapped == null)
+                throw new Exception($"Entity could not be mapped.");
 
-            _context.Entry(reserve).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReserveExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            await _reserveAppService.Update(mapped);
+            _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
 
         // POST: api/Reserves
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public void PostReserve(DateTime date, int restaurantId)
+        public async Task<ActionResult<ReserveViewModel>> PostReserve(ReserveViewModel reserve)
         {
-            _iReserveService.CreateReserve(new CreateReserveInput() { DateReserve = date, RestaurantId = restaurantId });
+            var mapped = _mapper.Map<ReserveModel>(reserve);
+            if (mapped == null)
+                throw new Exception($"Entity could not be mapped.");
+
+            var entityDto = await _reserveAppService.Create(mapped);
+            _logger.LogInformation($"Entity successfully added - IndexPageService");
+
+            var mappedViewModel = _mapper.Map<ReserveViewModel>(entityDto);
+            return mappedViewModel;
         }
 
         // DELETE: api/Reserves/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Reserve>> DeleteReserve(int id)
+        public async Task DeleteReserve(ReserveViewModel reserve)
         {
-            var reserve = await _context.Reserves.FindAsync(id);
-            if (reserve == null)
-            {
-                return NotFound();
-            }
+            var mapped = _mapper.Map<ReserveModel>(reserve);
+            if (mapped == null)
+                throw new Exception($"Entity could not be mapped.");
 
-            _context.Reserves.Remove(reserve);
-            await _context.SaveChangesAsync();
-
-            return reserve;
-        }
-
-        private bool ReserveExists(int id)
-        {
-            return _context.Reserves.Any(e => e.Id == id);
+            await _reserveAppService.Delete(mapped);
+            _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
     }
 }

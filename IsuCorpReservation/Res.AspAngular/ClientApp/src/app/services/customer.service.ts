@@ -1,15 +1,18 @@
-import { Customer } from "../models/customer.model";
-import { Subject } from "rxjs";
+import { CustomerViewModel } from "../models/customer.model";
+import { Observable, Subject } from "rxjs";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { HttpClient } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn : 'root',
+})
 export class CustomerService{
-    customerChanged = new Subject<Customer[]>();
-    customerSelected = new Subject<Customer>();
-
-    private customers : Customer[] = [
-        new Customer('Joan', '(000) 00 000 000', new Date(), '...'),
-        new Customer('Renaldo', '(000) 11 111 111', new Date(), 'Toda la vida comiendo pan')
-      ]
+     appUrl : string;
+      
+     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+        this.appUrl = baseUrl;  
+      }   
 
     form : FormGroup = new FormGroup({
         $key : new FormControl(null),
@@ -20,17 +23,27 @@ export class CustomerService{
         fc_Description : new FormControl('')
     })
 
-      getCustomers() {
-          return this.customers.slice();
-      }
+    initializeFormGroup() {
+      this.form.setValue({
+          $key : null,
+          fc_name : "",
+          fc_contacttype : 0,
+          fc_Birthday : new Date(),
+          fc_Telephone : "",
+          fc_Description : ""
+      });
+  }
+
+    getCustomers() : Observable<CustomerViewModel[]> {
+      return this.http.get<CustomerViewModel[]>(this.appUrl+'api/Customer');
+  }
 
       getCustomerDefault() {
-        return new Customer('Default', 'Default', new Date(), '...');
+        return new CustomerViewModel('Default', 'Default', new Date(), '...');
     }
 
-      addCustomer(customer : Customer){
-          this.customers.push(customer);
-          this.customerChanged.next(this.getCustomers());
+      addCustomer(customer : CustomerViewModel){
+          
       }
 
      getCustomerByName(name : string){

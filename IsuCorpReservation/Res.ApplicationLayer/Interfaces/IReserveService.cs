@@ -3,19 +3,20 @@ using Abp.Application.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Res.ApplicationLayer.Models;
 
 namespace Res.ApplicationLayer.Interfaces
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IReserveService : IApplicationService
+    public interface IReserveService
     {
-        GetReserveOutput GetReserves();
-        GetReserveOutput GetReserve(GetReserveInput input);
-        void UpdateReserve(UpdateReserveInput input);
-        void CreateReserve(CreateReserveInput input);
-        void UpdateReserveFavorietStatus(int id, bool state);
-        void UpdateReserveRanking(int id, int ranking);
+        Task<IEnumerable<ReserveModel>> GetReserveList();
+        Task<ReserveModel> GetReserveById(int ReserveId);
+        Task<ReserveModel> Create(ReserveModel ReserveModel);
+        Task Update(ReserveModel ReserveModel);
+        Task Delete(ReserveModel ReserveModel);
     }
 }

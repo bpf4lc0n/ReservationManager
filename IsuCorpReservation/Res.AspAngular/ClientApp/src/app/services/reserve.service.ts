@@ -1,15 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { Reserve } from "../models/reserve.model";
+import { ReserveViewModel } from "../models/reserve.model";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GetReserveOutput } from '../models/getReserveOutput.model.';
 
 @Injectable({
     providedIn : 'root',
 })
 export class ReserveService{
-    getReserveOutput: GetReserveOutput;
+    reserveViewModel: ReserveViewModel[];
     appUrl : string;  
     httpOptions = {
         headers : new HttpHeaders({
@@ -27,12 +26,8 @@ export class ReserveService{
     this.appUrl = baseUrl;  
   }    
     
-    getReserves() : Observable<GetReserveOutput> {
-        return this.http.get<GetReserveOutput>(this.appUrl+'Reserves');
-    }
-
-    create() : Observable<GetReserveOutput>{
-        return this.http.post<GetReserveOutput>(this.appUrl + 'Reserves/NewReserve', JSON.stringify() , this.httpOptions).pipe;
+    getReserves() : Observable<ReserveViewModel[]> {
+        return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves');
     }
 
     initializeFormGroup() {
@@ -44,6 +39,6 @@ export class ReserveService{
     }
 
     getReserveDefault(){
-        return new Reserve(new Date(2020, 9, 17, 10, 0, 0, 0), '-', '-', '(000) 00 000 000', new Date(), '...');
+        return new ReserveViewModel(new Date(2020, 9, 17, 10, 0, 0, 0), '-', '-', '(000) 00 000 000', new Date(), '...');
     }
 }

@@ -3,21 +3,30 @@ import { Routes, RouterModule } from "@angular/router";
 import { ReservesComponent } from "./reserves/reserves.component";
 import { CustomersComponent } from "./customers/customers.component";
 import { ReserveCustomerCreateComponent } from "./reserves/reserve-customer-create/reserve-customer-create.component";
-import { CustomerDetailComponent } from "./customers/customer-detail/customer-detail.component";
+import { CustomerEditComponent } from "./customers/customer-edit/customer-edit.component";
 import { ReserveStartComponent } from "./reserves/reserve-start/reserve-start.component";
 import { ReserveEditComponent } from "./reserves/reserve-edit/reserve-edit.component";
+import { CustomerCreateComponent } from "./customers/customer-create/customer-create.component";
 
 const appRoutes : Routes =[
     { path: '', redirectTo: '/reserves-list', pathMatch: 'full' }, 
     { path: 'reserves-list', component: ReservesComponent, children :[
         { path: '', component: ReserveStartComponent},  
-        { path: 'new', component: ReserveCustomerCreateComponent}, 
-        { path: ':id', component: ReserveEditComponent},
         { path: ':id/edit', component: ReserveEditComponent}
     ]},
-    { path: 'customers-list', component: CustomersComponent},
     { path: 'reserve-create', component: ReserveCustomerCreateComponent},
-    { path: 'customer-create', component: CustomerDetailComponent}
+    // Create Contact Form banner:  List and Edit
+    // When the user clicks on list, create a list page that starts after the banner
+    /*
+    { path: 'customer-create', component: CustomerCreateComponent, children :[ 
+        { path: 'customers-list', component: CustomersComponent },
+        { path: 'id/edit', component: CustomerEditComponent }
+    ]},
+    { path: 'customer-edit', component: CustomerEditComponent} // in a different page
+    */
+    { path: 'customers-list', component: CustomersComponent},
+    { path: 'customers-edit', component: CustomerEditComponent},
+    { path: 'customers-create', component: CustomerCreateComponent}
 ];
 
 @NgModule({

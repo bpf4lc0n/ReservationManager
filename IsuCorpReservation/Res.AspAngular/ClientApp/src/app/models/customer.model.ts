@@ -1,17 +1,17 @@
-import { CustomerType } from "./contacttype.model";
-import { Reserve } from "./reserve.model";
+import { CustomerTypeViewModel } from "./customertype.model";
+import { ReserveViewModel } from "./reserve.model";
 
-export class Customer{
+export class CustomerViewModel{
     public Id : number;
     public Name : string = '';
     public ContactTypeId : number;
-    public ContactType : CustomerType;
+    public ContactType : CustomerTypeViewModel;
     public Telephone : string = '';
     public DateBirth : Date;
     public Description : string = '';
     public UpdateDate : Date;   
     public CreatedDate : Date;
-    public Reserves : Reserve[];
+    public Reserves : ReserveViewModel[];
 
     constructor(name : string, phone : string, dateBirth : Date, desc : string)
     {
@@ -19,7 +19,7 @@ export class Customer{
         this.Telephone = phone;
         this.DateBirth = dateBirth;
         this.Description = desc;
-        this.ContactType = new CustomerType("Type 3")
+        this.ContactType = new CustomerTypeViewModel("Type 3")
         this.UpdateDate = new Date();
         this.CreatedDate = new Date();
     }

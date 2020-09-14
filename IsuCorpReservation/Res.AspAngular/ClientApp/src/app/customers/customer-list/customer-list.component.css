@@ -1,0 +1,9 @@
+mat-table{
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  td, th {
+    width: 25%;
+  }

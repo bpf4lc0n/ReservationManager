@@ -10,8 +10,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HeaderComponent } from './header/header.component';
 import { CustomersComponent } from './customers/customers.component';
 import { CustomerListComponent } from './customers/customer-list/customer-list.component';
-import { CustomerItemComponent } from './customers/customer-list/customer-item/customer-item.component';
-import { CustomerDetailComponent } from './customers/customer-detail/customer-detail.component';
+import { CustomerEditComponent } from './customers/customer-edit/customer-edit.component';
 import { ReservesComponent } from './reserves/reserves.component';
 import { ReserveListComponent } from './reserves/reserve-list/reserve-list.component';
 import { ReserveEditComponent } from './reserves/reserve-edit/reserve-edit.component';
@@ -20,7 +19,6 @@ import { ReserveService } from './services/reserve.service';
 import { ReserveCustomerCreateComponent } from './reserves/reserve-customer-create/reserve-customer-create.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReserveStartComponent } from './reserves/reserve-start/reserve-start.component';
-import { ContactTypeComponent } from './contacttype/contacttype.component';
 import { DropDownDirective } from './shared/dropdown.directive';
 import { ContactTypeService } from './services/contacttype.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,13 +26,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule, MatProgressBarModule} from '@angular/material';
-import { ReserveEditDialog } from './reserves/reserve-edit-dialog/reserve-edit-dialog';
-import { ReserveEditDialogItem } from "./reserves/reserve-edit-dialog/reserve-edit-dialog-item";
+import { ReserveEditDialog } from './customers/customer-delete-dialog/reserve-edit-dialog';
+import { ReserveEditDialogItem } from "./customers/customer-delete-dialog/reserve-edit-dialog-item";
 
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { HeaderMenuComponent } from './header/header-menu.component';
+import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
+import { RestaurantService } from './services/restaurant.service';
 
 @NgModule({
   declarations: [
@@ -44,14 +44,13 @@ import { HeaderMenuComponent } from './header/header-menu.component';
     HeaderMenuComponent,
     CustomersComponent,
     CustomerListComponent,
-    CustomerDetailComponent,
-    CustomerItemComponent,
+    CustomerCreateComponent,
+    CustomerEditComponent,
     ReservesComponent,
     ReserveListComponent,
     ReserveEditComponent,
     ReserveCustomerCreateComponent,
     ReserveStartComponent,
-    ContactTypeComponent,
     DropDownDirective, 
 
     ReserveEditDialog,
@@ -95,7 +94,7 @@ import { HeaderMenuComponent } from './header/header-menu.component';
   ],
   //entryComponents: [ReserveListComponent],
   entryComponents: [ReserveEditDialogItem],
-  providers: [CustomerService, ReserveService, ContactTypeService],
+  providers: [CustomerService, ReserveService, ContactTypeService, RestaurantService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

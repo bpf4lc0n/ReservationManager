@@ -15,7 +15,7 @@
 <hr>
 <div class="mat-elevation-z8">
     <hr>
-    <app-customer-detail [customer]=reserve.Customer></app-customer-detail>     
+    <app-customer-edit [customer]=customer></app-customer-edit>     
     <hr>
     <form [formGroup]="reserveService.form" class="normal-form">
         <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="80px">
@@ -43,16 +43,16 @@
     </form>
     <div class="container">
         <div class="button-row">
-        <button 
-        class="btn btn-success" 
-        type="submit"                         
-        (click)="onAddReserve()"
-        [disabled]="reserveService.form.invalid"
-        translate>SEND</button>  
-        <button class="btn btn-danger" (click)="onClear()">
-            CLEAR
-        </button> 
-    </div>     
+            <button 
+                class="btn btn-success" 
+                type="submit"                         
+                (click)="onAddReserve()"
+                [disabled]="reserveService.form.invalid"
+                translate>SEND</button>  
+            <button class="btn btn-danger" (click)="onClear()">
+                CLEAR
+            </button> 
+        </div>     
     </div>  
 </div>
 

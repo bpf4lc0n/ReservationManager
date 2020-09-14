@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.Infra.DataLayer", "Res.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.ApplicationLayer", "Res.ApplicationLayer\Res.ApplicationLayer.csproj", "{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.InfraIoCLayer", "Res.InfraIoCLayer\Res.InfraIoCLayer.csproj", "{DE63C383-DBF2-4D4F-8CDA-8F156966AE22}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Res.AspAngular", "Res.AspAngular\Res.AspAngular.csproj", "{E877DB97-8ACC-4D5E-B9A6-16BF0F2A696B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Res.AspAngular", "Res.AspAngular\Res.AspAngular.csproj", "{E877DB97-8ACC-4D5E-B9A6-16BF0F2A696B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF080ECE-71E8-4ECB-BC34-0E270C112EF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE63C383-DBF2-4D4F-8CDA-8F156966AE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE63C383-DBF2-4D4F-8CDA-8F156966AE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE63C383-DBF2-4D4F-8CDA-8F156966AE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE63C383-DBF2-4D4F-8CDA-8F156966AE22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E877DB97-8ACC-4D5E-B9A6-16BF0F2A696B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E877DB97-8ACC-4D5E-B9A6-16BF0F2A696B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E877DB97-8ACC-4D5E-B9A6-16BF0F2A696B}.Release|Any CPU.ActiveCfg = Release|Any CPU

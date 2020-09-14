@@ -1,10 +1,10 @@
-import { Reserve } from "./reserve.model";
+import { ReserveViewModel } from "./reserve.model";
 
-export class Restaurant{
+export class RestaurantViewModel{
     public Id : number;
     public Name : string = '';
     public Icon : string= "";
-    public ReserveDetails : Reserve[];
+    public ReserveDetails : ReserveViewModel[];
     public UpdateDate : Date;   
     public CreatedDate : Date;
 

@@ -36,10 +36,8 @@ p { color:red; }
     text-align: center;
   }
       
-  mat-table{
-    height: auto;
+  table {
     width: 100%;
-    max-width: 100%;
   }
    
   .mat-column-created {

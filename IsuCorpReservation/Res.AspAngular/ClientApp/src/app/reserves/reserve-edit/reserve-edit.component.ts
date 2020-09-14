@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
-import { Reserve } from '../../models/reserve.model';
+import { ReserveViewModel } from '../../models/reserve.model';
 import { ReserveService } from '../../services/reserve.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -9,21 +9,13 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./reserve-edit.component.css']
 })
 export class ReserveEditComponent implements OnInit {
-  reserve : Reserve;
+  reserve : ReserveViewModel;
   id: number;
 
   constructor(private reserveService : ReserveService,
               private route: ActivatedRoute) {     
   }
 
-  ngOnInit() {  
-    /*   
-    this.route.params.subscribe(
-      (param : Params) =>{
-        this.id = +param['id'];
-        this.reserve = this.reserveService.getReserve(this.id);
-      }
-    );  
-    */
+  ngOnInit() {      
   }
 }

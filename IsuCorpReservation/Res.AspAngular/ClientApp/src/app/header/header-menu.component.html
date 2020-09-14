@@ -1,10 +1,11 @@
-<mat-toolbar>    
-    <h1 style="color:red" translate>{{mainLabel}}</h1>
+<mat-toolbar>       
+    <button mat-mini-fab aria-label="" routerLink="/reserves-list">
+        <mat-icon>home</mat-icon>
+    </button> 
     <span class="example-spacer"></span>
-    <h6 style="color:grey">{{dirRef}}</h6>
-    <span class="example-spacer"></span>
-    <button 
-            class="btn btn-primary" 
-            routerLink="{{dirRef}}" 
-            type="submit" translate>{{buttonLabel}}</button>    
+    <button mat-button [matMenuTriggerFor]="menu">Contacts</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/customers-list">LIST</button>
+        <button mat-menu-item>EDIT</button>
+    </mat-menu>
 </mat-toolbar>

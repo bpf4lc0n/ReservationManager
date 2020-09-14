@@ -1,46 +1,94 @@
-﻿using Abp.Application.Services;
-using Res.ApplicationLayer.Interfaces;
+﻿using Res.ApplicationLayer.Interfaces;
+using Res.ApplicationLayer.Mapper;
+using Res.ApplicationLayer.Models;
 using Res.DomainLayer.Interfaces;
+using Res.DomainLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Res.ApplicationLayer.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CustomerService : ApplicationService, ICustomerService
+    public class CustomerService : ICustomerService
     {
-        private readonly ICustomerRepository _iCustomerRepository;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="iCustomerRepository"></param>
-        public CustomerService(ICustomerRepository iCustomerRepository)
+        private readonly ICustomerRepository _CustomerRepository;
+        private readonly IAppLogger<CustomerService> _logger;
+
+        public CustomerService(ICustomerRepository CustomerRepository, IAppLogger<CustomerService> logger)
         {
-            _iCustomerRepository = iCustomerRepository;
+            _CustomerRepository = CustomerRepository ?? throw new ArgumentNullException(nameof(CustomerRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void CreateCustomer(CreateCustomerInput input)
+        public async Task<IEnumerable<CustomerModel>> GetCustomerList()
         {
-            throw new NotImplementedException();
+            var CustomerList = await _CustomerRepository.GetAllAsync();
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CustomerModel>>(CustomerList);
+            return mapped;
         }
 
-        public GetCustomerOutput GetCustomer(GetCustomerInput input)
+        public async Task<CustomerModel> GetCustomerById(int CustomerId)
         {
-            throw new NotImplementedException();
+            var Customer = await _CustomerRepository.GetByIdAsync(CustomerId);
+            var mapped = ObjectMapper.Mapper.Map<CustomerModel>(Customer);
+            return mapped;
         }
 
-        public GetCustomerOutput GetCustomers()
+        public async Task<CustomerModel> Create(CustomerModel CustomerModel)
         {
-            var values = _iCustomerRepository.GetAllCustomersData();
-            return new GetCustomerOutput() { customers = values };
+            await ValidateCustomerIfExist(CustomerModel);
+
+            var mappedEntity = ObjectMapper.Mapper.Map<Customer>(CustomerModel);
+            if (mappedEntity == null)
+                throw new ApplicationException($"Entity could not be mapped.");
+
+            var newEntity = await _CustomerRepository.AddAsync(mappedEntity);
+            _logger.LogInformation($"Entity successfully added - AspnetRunAppService");
+
+            var newMappedEntity = ObjectMapper.Mapper.Map<CustomerModel>(newEntity);
+            return newMappedEntity;
         }
 
-        public void UpdateCustomer(UpdateCustomerInput input)
+        public async Task Update(CustomerModel CustomerModel)
         {
-            throw new NotImplementedException();
+            ValidateCustomerIfNotExist(CustomerModel);
+
+            var editCustomer = await _CustomerRepository.GetByIdAsync(CustomerModel.Id);
+            if (editCustomer == null)
+                throw new ApplicationException($"Entity could not be loaded.");
+
+            ObjectMapper.Mapper.Map<CustomerModel, Customer>(CustomerModel, editCustomer);
+
+            await _CustomerRepository.UpdateAsync(editCustomer);
+            _logger.LogInformation($"Entity successfully updated - AspnetRunAppService");
+        }
+
+        public async Task Delete(CustomerModel CustomerModel)
+        {
+            ValidateCustomerIfNotExist(CustomerModel);
+            var deletedCustomer = await _CustomerRepository.GetByIdAsync(CustomerModel.Id);
+            if (deletedCustomer == null)
+                throw new ApplicationException($"Entity could not be loaded.");
+
+            await _CustomerRepository.DeleteAsync(deletedCustomer);
+            _logger.LogInformation($"Entity successfully deleted - AspnetRunAppService");
+        }
+
+        private async Task ValidateCustomerIfExist(CustomerModel CustomerModel)
+        {
+            var existingEntity = await _CustomerRepository.GetByIdAsync(CustomerModel.Id);
+            if (existingEntity != null)
+                throw new ApplicationException($"{CustomerModel.ToString()} with this id already exists");
+        }
+
+        private void ValidateCustomerIfNotExist(CustomerModel CustomerModel)
+        {
+            var existingEntity = _CustomerRepository.GetByIdAsync(CustomerModel.Id);
+            if (existingEntity == null)
+                throw new ApplicationException($"{CustomerModel.ToString()} with this id is not exists");
         }
     }
 }

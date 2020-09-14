@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { Reserve } from '../../models/reserve.model';
+import { ReserveViewModel } from '../../models/reserve.model';
 import { ReserveService } from '../../services/reserve.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { CustomerViewModel } from 'src/app/models/customer.model';
 
 @Component({
   selector: 'app-reserve-customer-create',
@@ -11,11 +11,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class ReserveCustomerCreateComponent implements OnInit {
   id : number;
   editMode = false;
-  reserve : Reserve;
+  reserve : ReserveViewModel;
+  customer : CustomerViewModel;
 
   constructor(
-    private reserveService : ReserveService,         
-    private route : ActivatedRoute) { }
+    private reserveService : ReserveService) { }
 
   ngOnInit() {     
   }

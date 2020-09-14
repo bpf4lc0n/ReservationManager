@@ -65,7 +65,7 @@ namespace Res.Infra.DataLayer.Migrations
 
                     b.Property<string>("ContactType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nchar(20)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");

@@ -1,19 +1,18 @@
-﻿using Abp.Application.Services;
-using Res.ApplicationLayer.Services;
-using System;
+﻿using Res.ApplicationLayer.Models;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Res.ApplicationLayer.Interfaces
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface ICustomerService : IApplicationService
+    public interface ICustomerService
     {
-        GetCustomerOutput GetCustomers();
-        GetCustomerOutput GetCustomer(GetCustomerInput input);
-        void UpdateCustomer(UpdateCustomerInput input);
-        void CreateCustomer(CreateCustomerInput input);
+        Task<IEnumerable<CustomerModel>> GetCustomerList();
+        Task<CustomerModel> GetCustomerById(int CustomerId);
+        Task<CustomerModel> Create(CustomerModel CustomerModel);
+        Task Update(CustomerModel CustomerModel);
+        Task Delete(CustomerModel CustomerModel);
     }
 }

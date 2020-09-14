@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Res.DomainLayer.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,18 +12,13 @@ namespace Res.DomainLayer.Models
     /// At first is was design as <see cref="Enum"/>, but in the directions was includes
     /// that must be treat as a separate DB Table
     /// </summary>
-    public class CustomerType : AuditableEntity
+    public class CustomerType : Entity
     {
-        /// <summary>
-        /// Customer Contact Type Id
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         /// <summary>
         /// Contact Type value
         /// </summary>
         [Required]
+        [Column(TypeName = "nchar(20)")]
         public string ContactType { get; set; }
     }
 }

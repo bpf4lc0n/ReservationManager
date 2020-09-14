@@ -3,6 +3,7 @@
 // ISU Corp Reservation
 // =============================
 
+using Res.DomainLayer.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,14 +17,8 @@ namespace Res.DomainLayer.Models
     /// <summary>
     /// Restaurat Model
     /// </summary>
-    public class Restaurant : AuditableEntity
+    public class Restaurant : Entity
     {
-        /// <summary>
-        /// Restaurant Id
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         /// <summary>
         /// Restaurant Name
         /// </summary>

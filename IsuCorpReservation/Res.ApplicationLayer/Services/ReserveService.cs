@@ -1,102 +1,94 @@
-﻿using Abp.Application.Services;
-using AutoMapper;
-using Res.ApplicationLayer.Interfaces;
+﻿using Res.ApplicationLayer.Interfaces;
+using Res.ApplicationLayer.Mapper;
+using Res.ApplicationLayer.Models;
 using Res.DomainLayer.Interfaces;
 using Res.DomainLayer.Models;
-using Res.Infra.DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Res.ApplicationLayer.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ReserveService : ApplicationService, IReserveService
+    public class ReserveService : IReserveService
     {
-        private readonly IReserveRepository _iReserveRepository;
-        private readonly ICustomerRepository _iCustomerRepository;
-        private readonly IRestaurantRepository _iRestaurantRepository;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="iReserveRepository"></param>
-        /// <param name="customerRepository"></param>
-        /// <param name="iRestaurantRepository"></param>
-        public ReserveService(IReserveRepository iReserveRepository, ICustomerRepository customerRepository, IRestaurantRepository iRestaurantRepository)
+        private readonly IReserveRepository _ReserveRepository;
+        private readonly IAppLogger<ReserveService> _logger;
+
+        public ReserveService(IReserveRepository ReserveRepository, IAppLogger<ReserveService> logger)
         {
-            _iReserveRepository = iReserveRepository;
-            _iCustomerRepository = customerRepository;
-            _iRestaurantRepository = iRestaurantRepository;
+            _ReserveRepository = ReserveRepository ?? throw new ArgumentNullException(nameof(ReserveRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void CreateReserve(CreateReserveInput input)
+        public async Task<IEnumerable<ReserveModel>> GetReserveList()
         {
-            //We can use Logger, it's defined in ApplicationService class.
-            Logger.Info("Creating a reserve for input: " + input);
-
-            //Creating a new Reserve entity with given input's properties
-            var reserve = new Reserve {
-                DateReserve = input.DateReserve,
-                CustomerId = input.CustomerId,
-                RestaurantId = input.RestaurantId
-            };
-
-            //Saving entity with standard Insert method of repositories.
-            _iReserveRepository.Add(reserve);
+            var ReserveList = await _ReserveRepository.GetReserveListAsync();
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ReserveModel>>(ReserveList);
+            return mapped;
         }
 
-
-        public GetReserveOutput GetReserve(GetReserveInput input)
+        public async Task<ReserveModel> GetReserveById(int ReserveId)
         {
-            //Called specific GetAllWithPeople method of reserve repository.
-            var reserves = _iReserveRepository.GetReserveDetails(input.ReserveId);
-
-            //Used AutoMapper to automatically convert List<reserve> to List<reserveDto>.
-            return new GetReserveOutput
-            {
-                // with dto
-                // reserves = Mapper.Map<List<ReserveDto>>(reserves)
-                reserves = reserves
-            };
+            var Reserve = await _ReserveRepository.GetByIdAsync(ReserveId);
+            var mapped = ObjectMapper.Mapper.Map<ReserveModel>(Reserve);
+            return mapped;
         }
 
-        public GetReserveOutput GetReserves()
+        public async Task<ReserveModel> Create(ReserveModel ReserveModel)
         {
-            var reserves = _iReserveRepository.GetAllReserveData();           
-            return new GetReserveOutput
-            {
-                // if needed ... use AutoMapper to automatically convert List<reserve> to List<reserveDto>.
-                // with dto
-                // reserves = Mapper.Map<List<ReserveDto>>(reserves)
-                reserves = reserves
-            };
+            await ValidateReserveIfExist(ReserveModel);
+
+            var mappedEntity = ObjectMapper.Mapper.Map<Reserve>(ReserveModel);
+            if (mappedEntity == null)
+                throw new ApplicationException($"Entity could not be mapped.");
+
+            var newEntity = await _ReserveRepository.AddAsync(mappedEntity);
+            _logger.LogInformation($"Entity successfully added - AspnetRunAppService");
+
+            var newMappedEntity = ObjectMapper.Mapper.Map<ReserveModel>(newEntity);
+            return newMappedEntity;
         }
 
-        public void UpdateReserve(UpdateReserveInput input)
+        public async Task Update(ReserveModel ReserveModel)
         {
-            //Retrieving a reserve entity with given id using standard Get method of repositories.
-            var reserve = _iReserveRepository.Get(input.ReserveId);
+            ValidateReserveIfNotExist(ReserveModel);
 
-            reserve.DateReserve = input.DateReserve;
-            reserve.FavoriteStatus = input.FavoriteStatus;
-            reserve.Ranking = input.Ranking;
+            var editReserve = await _ReserveRepository.GetByIdAsync(ReserveModel.Id);
+            if (editReserve == null)
+                throw new ApplicationException($"Entity could not be loaded.");
 
-            //Updating changed properties of the retrieved reserve entity.
-            if (input.CustomerId != 0)
-            {
-                reserve.Customer = _iCustomerRepository.Get(input.CustomerId);
-            }
+            ObjectMapper.Mapper.Map<ReserveModel, Reserve>(ReserveModel, editReserve);
 
-            if (input.RestaurantId != 0)
-            {
-                reserve.Restaurant = _iRestaurantRepository.Get(input.RestaurantId);
-            }
+            await _ReserveRepository.UpdateAsync(editReserve);
+            _logger.LogInformation($"Entity successfully updated - AspnetRunAppService");
+        }
 
-            //We even do not call Update method of the repository.
-            //Because an application service method is a 'unit of work' scope as default.
-            //ABP automatically saves all changes when a 'unit of work' scope ends (without any exception).
+        public async Task Delete(ReserveModel ReserveModel)
+        {
+            ValidateReserveIfNotExist(ReserveModel);
+            var deletedReserve = await _ReserveRepository.GetByIdAsync(ReserveModel.Id);
+            if (deletedReserve == null)
+                throw new ApplicationException($"Entity could not be loaded.");
+
+            await _ReserveRepository.DeleteAsync(deletedReserve);
+            _logger.LogInformation($"Entity successfully deleted - AspnetRunAppService");
+        }
+
+        private async Task ValidateReserveIfExist(ReserveModel ReserveModel)
+        {
+            var existingEntity = await _ReserveRepository.GetByIdAsync(ReserveModel.Id);
+            if (existingEntity != null)
+                throw new ApplicationException($"{ReserveModel.ToString()} with this id already exists");
+        }
+
+        private void ValidateReserveIfNotExist(ReserveModel ReserveModel)
+        {
+            var existingEntity = _ReserveRepository.GetByIdAsync(ReserveModel.Id);
+            if (existingEntity == null)
+                throw new ApplicationException($"{ReserveModel.ToString()} with this id is not exists");
         }
     }
 }

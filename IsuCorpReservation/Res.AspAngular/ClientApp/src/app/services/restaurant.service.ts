@@ -1,15 +1,19 @@
-import { Restaurant } from "../models/restaurant.model";
+import { HttpClient } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { RestaurantViewModel } from "../models/restaurant.model";
 
+@Injectable({
+    providedIn : 'root',
+})
 export class RestaurantService{
+    appUrl : string;
 
-    private types : Restaurant[] = [
-        new Restaurant('Restaurant 1'),
-        new Restaurant('Restaurant 2'),
-        new Restaurant('Restaurant 3'),
-        new Restaurant('Restaurant 4')
-      ]
-
-    getContactType(){
-        return this.types.slice();
+    constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+        this.appUrl = baseUrl;  
+    }    
+        
+    getCustomerTypes() : Observable<RestaurantViewModel[]> {
+        return this.http.get<RestaurantViewModel[]>(this.appUrl+'api/Restaurant');
     }
 }

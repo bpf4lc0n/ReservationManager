@@ -1,16 +1,14 @@
-﻿using Abp.Application.Services;
-using Res.ApplicationLayer.Services;
-using System;
+﻿using Res.ApplicationLayer.Models;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Res.ApplicationLayer.Interfaces
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface ICustomerTypeService : IApplicationService
+    public interface ICustomerTypeService
     {
-        GetCustomerTypeOutput GetCustomerTypes();
+        Task<IEnumerable<CustomerTypeModel>> GetCustomerTypeList();
     }
 }

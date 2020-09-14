@@ -1,10 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-import { Reserve } from '../../models/reserve.model';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ReserveViewModel } from '../../models/reserve.model';
 import { ReserveService } from '../../services/reserve.service';
-import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import {Sort} from '@angular/material/sort';
-import { GetReserveOutput } from 'src/app/models/getReserveOutput.model.';
 
 @Component({
   selector: 'app-reserve-list',
@@ -12,13 +10,12 @@ import { GetReserveOutput } from 'src/app/models/getReserveOutput.model.';
   styleUrls: ['./reserve-list.component.css']
 })
 export class ReserveListComponent implements OnInit, OnDestroy {
-  getReserveOutput : GetReserveOutput;  
-  Reserves : Reserve[];
-  sortedData: Reserve[];
+  Reserves : ReserveViewModel[];
+  sortedData: ReserveViewModel[];
 
   selectedColumn : string;
   pos : number;
-  dataSource: MatTableDataSource<Reserve>;
+  dataSource: MatTableDataSource<ReserveViewModel>;
 
   columnDefinitions = [
     { def: 'Icon', showMobile: false },
@@ -29,7 +26,7 @@ export class ReserveListComponent implements OnInit, OnDestroy {
     ];
 
   //@ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static:false}) sort: MatSort;
+  //@ViewChild(MatSort, {static:false}) sort: MatSort;
 
   constructor(private reserveService : ReserveService) { 
     this.getReserves();
@@ -40,24 +37,23 @@ export class ReserveListComponent implements OnInit, OnDestroy {
   }
 
   getReserves() {
-    this.reserveService.getReserves().subscribe(data => {this.getReserveOutput = data; console.log('data', data); console.log('data', data.reserves);
-    console.log('reserves', this.getReserveOutput); console.log('reserves', this.getReserveOutput.reserves)});
+    this.reserveService.getReserves().subscribe(data => {this.Reserves = data; console.log('data', data); console.log('reserves', this.Reserves)});
   }
 
   ngAfterViewInit() {
     //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+   // this.dataSource.sort = this.sort;
   }  
 
   ngOnDestroy() : void {
       
   }
 
-  onFavorite(res : Reserve){
+  onFavorite(res : ReserveViewModel){
     res.FavoriteStatus = !res.FavoriteStatus;
   }
 
-  onRate(res : Reserve, value : number){
+  onRate(res : ReserveViewModel, value : number){
     res.Ranking = value;
   }
  
@@ -74,8 +70,8 @@ export class ReserveListComponent implements OnInit, OnDestroy {
 
   changeSortedColumn() {
     const sortState: Sort = {active: this.selectedColumn, direction: 'asc'};
-    this.sort.active = sortState.active;
-    this.sort.direction = sortState.direction;
-    this.sort.sortChange.emit(sortState);    
+    //this.sort.active = sortState.active;
+    //this.sort.direction = sortState.direction;
+    //this.sort.sortChange.emit(sortState);    
   }
 }

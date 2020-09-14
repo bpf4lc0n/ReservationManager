@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Res.InfraIoCLayer;
 using System;
+
 using Res.Infra.DataLayer;
+using Res.DomainLayer.Configuration;
+using Res.Infra.DataLayer.Repository.Base;
+using Res.DomainLayer.Interfaces;
+using Res.Infra.DataLayer.Repositories;
+using Res.Infra.DataLayer.Logging;
+using Res.ApplicationLayer.Interfaces;
+using Res.ApplicationLayer.Services;
+using AutoMapper;
 
 namespace Res.AspAngular
 {
@@ -26,19 +33,16 @@ namespace Res.AspAngular
         {
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            // In production, the Angular files will be served from this directory
+            // In Reserveion, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });
-
-            services.AddDbContext<ReservationDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("Res.Infra.DataLayer")));
+            });            
 
             // Add cors
             services.AddCors();
 
-            RegisterServices(services);
+            ConfigureAspnetRunServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +55,7 @@ namespace Res.AspAngular
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for Reserveion scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -63,6 +67,10 @@ namespace Res.AspAngular
             }
 
             app.UseRouting();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {
@@ -85,11 +93,40 @@ namespace Res.AspAngular
                     spa.Options.StartupTimeout = TimeSpan.FromSeconds(180);
                 }
             });
+        }     
+
+        private void ConfigureAspnetRunServices(IServiceCollection services)
+        {
+            // Add Core Layer
+            services.Configure<AspnetRunSettings>(Configuration);
+
+            // Add Infrastructure Layer
+            ConfigureDatabases(services);
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IReserveRepository, ReserveRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerTypeRepository, CustomerTypeRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            // Add Application Layer
+            services.AddScoped<IReserveService, ReserveService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerTypeService, CustomerTypeService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
-        private static void RegisterServices(IServiceCollection services)
+        public void ConfigureDatabases(IServiceCollection services)
         {
-            DependendyContainer.RegisterServices(services);
+            // use in-memory database
+            //services.AddDbContext<AspnetRunContext>(c =>
+            //    c.UseInMemoryDatabase("AspnetRunConnection"));
+
+            // use real database
+           services.AddDbContext<ReservationDbContext>(options =>
+            options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("Res.Infra.DataLayer")));
         }
     }
 }
