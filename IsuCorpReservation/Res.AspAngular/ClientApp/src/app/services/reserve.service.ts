@@ -1,8 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReserveViewModel } from "../models/reserve.model";
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn : 'root',
@@ -31,12 +32,19 @@ export class ReserveService{
     })
     
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, 
+    @Inject('BASE_URL') baseUrl:
+     string, 
+     private router : Router) {
     this.appUrl = baseUrl;  
   }    
     
     getReserves() : Observable<ReserveViewModel[]> {
-        return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves');
+        return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves').pipe();
+    }
+
+    getReserveById(id : number) : Observable<ReserveViewModel> {
+        return this.http.get<ReserveViewModel>(this.appUrl+'api/Reserves/'+id);
     }
 
     AddReserve(res)  : Observable<ReserveViewModel>
@@ -47,15 +55,14 @@ export class ReserveService{
             JSON.stringify(reserve), this.httpOptions).pipe()  
     }  
   
-    EditReserve(res : ReserveViewModel)  
+    EditReserve(id : number, res : ReserveViewModel)  
     {          
-        return this.http.put<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id,
+        return this.http.put<ReserveViewModel>(this.appUrl+'api/Reserves/' + id,
             JSON.stringify(res), this.httpOptions).pipe()       
     } 
 
     DeleteEmployee(res : ReserveViewModel)  
     {  
-        return this.http.delete<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id) 
-    
-    }  
+        return this.http.delete<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id);    
+    } 
 }

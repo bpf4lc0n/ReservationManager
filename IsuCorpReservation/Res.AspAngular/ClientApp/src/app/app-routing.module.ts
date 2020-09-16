@@ -12,10 +12,10 @@ import { CustomerListComponent } from "./customers/customer-list/customer-list.c
 const appRoutes : Routes =[
     { path: '', redirectTo: '/reserves-list', pathMatch: 'full' }, 
     { path: 'reserves-list', component: ReservesComponent, children :[
-        { path: '', component: ReserveStartComponent},  
-        { path: ':id/edit', component: ReserveEditComponent}
+        { path: '', component: ReserveStartComponent}
     ]},
     { path: 'reserve-create', component: ReserveCustomerCreateComponent},
+    { path: 'reserve-edit/:id', component: ReserveEditComponent},
     // Create Contact Form banner:  List and Edit
     // When the user clicks on list, create a list page that starts after the banner
     /*
@@ -26,7 +26,7 @@ const appRoutes : Routes =[
     { path: 'customer-edit', component: CustomerEditComponent} // in a different page
     */
     { path: 'customers-list', component: CustomerListComponent},
-    { path: 'customers-edit', component: CustomerEditComponent},
+    { path: 'customers-edit/:id', component: CustomerEditComponent},
     { path: 'customers-create', component: CustomerCreateComponent}
 ];
 

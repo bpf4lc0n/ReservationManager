@@ -1,5 +1,4 @@
 import { CustomerTypeViewModel } from "./customertype.model";
-import { ReserveViewModel } from "./reserve.model";
 
 export class CustomerViewModel{
     public id : number;
@@ -10,12 +9,12 @@ export class CustomerViewModel{
     public dateBirth : Date;
     public description : string = '';
 
-    constructor(name : string, phone : string, dateBirth : Date, desc : string)
+    constructor(name : string, phone : string, dateBirth : Date, desc : string, cTypeId : number)
     {
         this.name = name;
         this.telephone = phone;
-        this.dateBirth = dateBirth;
+        this.dateBirth = (!dateBirth) ? new Date(): dateBirth;
         this.description = desc;
-        this.contactType = new CustomerTypeViewModel("Type 3")
+        this.contactTypeId = (!cTypeId) ? 0 : cTypeId;
     }
 }

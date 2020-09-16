@@ -59,13 +59,13 @@
                             <ng-container matColumnDef="Edit">
                                 <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell *matCellDef="let row; let i = index;">
-                                        <button class="btn btn-primary" href=""  routerLink="/customers-edit" routerLinkActive="router-link-active" translate>EDIT</button>
+                                        <button class="btn btn-primary" href=""  routerLink="/customers-edit/{{row.id}}" routerLinkActive="router-link-active" translate>EDIT</button>
                                 </td>
                             </ng-container> 
                             <ng-container matColumnDef="Delete">
                                 <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell *matCellDef="let row; let i = index;">
-                                    <button class="btn btn-primary" href="" routerLinkActive="router-link-active"  translate>DELETE</button>
+                                    <button class="btn btn-primary" href="" routerLinkActive="router-link-active" (click)="openDialog(row)"  translate>DELETE</button>
                                 </td>
                             </ng-container> 
                             <tr mat-header-row *matHeaderRowDef="columnDefinitions"></tr>

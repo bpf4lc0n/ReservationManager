@@ -20,6 +20,6 @@
     "Clients" : "Clients",
     "List" : "List",
     "New" : "New",
-    ".error" : "This field is mandatory",
+    ".error" : "Mandatory",
     "CLEAR" : "CLEAR"
 }

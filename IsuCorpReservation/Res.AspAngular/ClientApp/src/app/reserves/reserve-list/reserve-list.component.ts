@@ -53,13 +53,13 @@ export class ReserveListComponent implements OnInit, OnDestroy {
 
   onFavorite(res : ReserveViewModel){
     res.favoriteStatus = !res.favoriteStatus;
-    this.reserveService.EditReserve(res) 
+    this.reserveService.EditReserve(res.id, res) 
         .subscribe(arg => {console.log('Reserve Favorite status is update successfully')});
   }
 
   onRate(res : ReserveViewModel, value : number){
     res.ranking = value;
-    this.reserveService.EditReserve(res) 
+    this.reserveService.EditReserve(res.id, res) 
         .subscribe(arg => {console.log('Reserve Ranking is update successfully')});
   }
  

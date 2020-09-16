@@ -5,6 +5,7 @@ import { CustomerViewModel } from 'src/app/models/customer.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerTypeViewModel } from 'src/app/models/customertype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-reserve-customer-create',
@@ -19,7 +20,9 @@ export class ReserveCustomerCreateComponent implements OnInit {
   reserveCustomerForm : FormGroup ;
 
   constructor(public fb : FormBuilder,
-    private reserveService : ReserveService, private ctService : ContactTypeService) { }
+    private reserveService : ReserveService, 
+    private ctService : ContactTypeService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {   
     this.getContactType();
@@ -39,7 +42,14 @@ export class ReserveCustomerCreateComponent implements OnInit {
 
   submitForm() {
     this.reserveService.AddReserve(this.reserveCustomerForm.value) 
-        .subscribe(arg => {console.log('Reserve is created successfully')});
+    .subscribe(
+      data => {
+        this.openSnackBar('Reserve added');
+      },
+      error => {
+        this.openSnackBar('The add action failed. ' + error.message);
+      }
+    );
   }
   
   initializeFormGroup() {
@@ -68,5 +78,11 @@ export class ReserveCustomerCreateComponent implements OnInit {
   getContactType() {
     this.ctService.getCustomerTypes().subscribe(data => {this.ctTypes = data; 
       console.log('data', data); console.log('contact-type', this.ctTypes)});
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', {
+      duration: 1500,
+    });
   }
 }

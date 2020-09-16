@@ -11,7 +11,7 @@ export class ReserveViewModel{
 
     constructor(date : Date, restaurant : string, custId : number)
     {
-        this.dateReserve = date;
+        this.dateReserve = (!date) ? new Date(): date;
         this.restaurant = restaurant;
         this.customerId = custId;
     }

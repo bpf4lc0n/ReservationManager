@@ -20,6 +20,6 @@
     "Clients" : "Clientes",
     "List" : "Listado",
     "New" : "Nuevo",
-    ".error" : "Es un campo obligatorio",
+    ".error" : "Obligatorio",
     "CLEAR" : "CANCELAR"
 }

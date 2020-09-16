@@ -81,7 +81,12 @@ namespace Res.Infra.DataLayer.Repository.Base
         public async Task<T> AddAsync(T entity)
         {
             _dbContext.Set<T>().Add(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception error) 
+            {  }
             return entity;
         }
 

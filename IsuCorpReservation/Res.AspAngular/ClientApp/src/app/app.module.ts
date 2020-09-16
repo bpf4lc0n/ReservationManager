@@ -24,15 +24,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule, MatProgressBarModule} from '@angular/material';
-import { ReserveEditDialog } from './customers/customer-delete-dialog/reserve-edit-dialog';
-import { ReserveEditDialogItem } from "./customers/customer-delete-dialog/reserve-edit-dialog-item";
+import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule, MatProgressBarModule, MatSnackBarModule} from '@angular/material';
 
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { HeaderMenuComponent } from './header/header-menu.component';
 import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
+import { CustomerDeleteDialog } from './customers/customer-delete-dialog/customer-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +49,7 @@ import { CustomerCreateComponent } from './customers/customer-create/customer-cr
     ReserveStartComponent,
     DropDownDirective, 
 
-    ReserveEditDialog,
-    ReserveEditDialogItem
+    CustomerDeleteDialog
   ],  
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -79,6 +77,7 @@ import { CustomerCreateComponent } from './customers/customer-create/customer-cr
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatCardModule,
+    MatSnackBarModule,
 
     TranslateModule.forRoot({
       loader:{
@@ -90,7 +89,7 @@ import { CustomerCreateComponent } from './customers/customer-create/customer-cr
     CKEditorModule
   ],
   //entryComponents: [ReserveListComponent],
-  entryComponents: [ReserveEditDialogItem],
+  entryComponents: [CustomerDeleteDialog],
   providers: [CustomerService, ReserveService, ContactTypeService],
   bootstrap: [AppComponent]
 })

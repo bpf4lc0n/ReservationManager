@@ -15,11 +15,11 @@ namespace Res.AspAngular.Controllers
     public class ReservesController : ControllerBase
     {
         private readonly IReserveService _reserveAppService;
-        private readonly ICustomerService _customerAppService;
+        private readonly IReserveService _ReserveAppService;
         private readonly ILogger<ReservesController> _logger;
         private readonly IMapper _mapper;
 
-        public ReservesController(IReserveService reserveAppService, ICustomerService customerAppService, IMapper mapper, ILogger<ReservesController> logger)
+        public ReservesController(IReserveService reserveAppService, IReserveService ReserveAppService, IMapper mapper, ILogger<ReservesController> logger)
         {
             _reserveAppService = reserveAppService ?? throw new ArgumentNullException(nameof(reserveAppService));
             _reserveAppService = reserveAppService ?? throw new ArgumentNullException(nameof(reserveAppService));
@@ -38,13 +38,18 @@ namespace Res.AspAngular.Controllers
 
         // GET: api/Reserves/5
         [HttpGet("{id}")]
-        public async Task<ReserveViewModel> GetReserve(int id)
+        public async Task<ReserveViewModel> GetReserve([FromRoute] int id)
         {
             var Reserve = await _reserveAppService.GetReserveById(id);
             var mapped = _mapper.Map<ReserveViewModel>(Reserve);
             return mapped;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reserve"></param>
+        /// <returns></returns>
         [HttpPost()]
         public async Task PostReserve(ReserveViewModel reserve)
         {
@@ -70,16 +75,17 @@ namespace Res.AspAngular.Controllers
             _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
 
-        
-        // DELETE: api/Reserves/5
+
         [HttpDelete("{id}")]
-        public async Task DeleteReserve(ReserveViewModel reserve)
+        public async Task DeleteReserve([FromRoute] int id)
         {
-            var mapped = _mapper.Map<ReserveModel>(reserve);
+            var Reserve = await _ReserveAppService.GetReserveById(id);
+
+            var mapped = _mapper.Map<ReserveModel>(Reserve);
             if (mapped == null)
                 throw new Exception($"Entity could not be mapped.");
 
-            await _reserveAppService.Delete(mapped);
+            await _ReserveAppService.Delete(mapped);
             _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
     }

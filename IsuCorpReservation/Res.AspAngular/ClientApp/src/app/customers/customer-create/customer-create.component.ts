@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { CustomerViewModel } from 'src/app/models/customer.model';
 import { CustomerTypeViewModel } from 'src/app/models/customertype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
@@ -17,7 +18,8 @@ export class CustomerCreateComponent implements OnInit {
   
   constructor(public fb : FormBuilder, 
     private customerService : CustomerService, 
-    private ctService : ContactTypeService) {     
+    private ctService : ContactTypeService,
+    private _snackBar: MatSnackBar) {     
   }
 
   ngOnInit() {
@@ -43,4 +45,22 @@ export class CustomerCreateComponent implements OnInit {
   getColAdjusment():number{
     return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
    }
+
+   submitForm() {
+    this.customerService.AddCustomer(this.reserveCustomerForm.value) 
+    .subscribe(
+      data => {
+        this.openSnackBar('Customer added');
+      },
+      error => {
+        this.openSnackBar('The add action failed. ' + error.message);
+      }
+    );
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', {
+      duration: 1500,
+    });
+  }
 }
