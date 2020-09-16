@@ -7,6 +7,7 @@ import { CustomerEditComponent } from "./customers/customer-edit/customer-edit.c
 import { ReserveStartComponent } from "./reserves/reserve-start/reserve-start.component";
 import { ReserveEditComponent } from "./reserves/reserve-edit/reserve-edit.component";
 import { CustomerCreateComponent } from "./customers/customer-create/customer-create.component";
+import { CustomerListComponent } from "./customers/customer-list/customer-list.component";
 
 const appRoutes : Routes =[
     { path: '', redirectTo: '/reserves-list', pathMatch: 'full' }, 
@@ -24,7 +25,7 @@ const appRoutes : Routes =[
     ]},
     { path: 'customer-edit', component: CustomerEditComponent} // in a different page
     */
-    { path: 'customers-list', component: CustomersComponent},
+    { path: 'customers-list', component: CustomerListComponent},
     { path: 'customers-edit', component: CustomerEditComponent},
     { path: 'customers-create', component: CustomerCreateComponent}
 ];

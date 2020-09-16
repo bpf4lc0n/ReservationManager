@@ -12,4 +12,5 @@ export class AppComponent {
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('en')
   }
+
 }

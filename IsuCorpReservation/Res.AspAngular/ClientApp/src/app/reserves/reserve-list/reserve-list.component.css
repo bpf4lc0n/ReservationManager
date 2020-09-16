@@ -1,7 +1,29 @@
 p { color:red; }
+
+.h1 {
+  color: red;
+  font-size: 15px;
+}
+
+.mat-card{
+  padding: 0;
+}
+
+.mat-card-header{
+  background-color: #f8f8f8;
+}
+
+.mat-card-content{
+  padding: 15px;
+  background-color: #efefef;
+}
+
+.mat-elevation-z8{
+  background-color: #fafafa;
+}
   
-  .mat-form-field {
-    font-size: 14px;
+.mat-form-field {
+    font-size: 12px;
     width: 100%;
   }
 
@@ -12,38 +34,16 @@ p { color:red; }
 .mat-row:nth-child(odd){
     background-color:whitesmoke;
     }
+
+.mat-table{
+  width: 100%;
+  height: 100%;
+}
   
   td, th {
     width: 25%;
   }
-
-  .example-loading-shade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 56px;
-    right: 0;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   
-  .example-rate-limit-reached {
-    color: #980000;
-    max-width: 360px;
-    text-align: center;
-  }
-      
-  table {
-    width: 100%;
-  }
-   
-  .mat-column-created {
-    max-width: 124px;
-  }
-
   .rate{
     color:orange;
   }

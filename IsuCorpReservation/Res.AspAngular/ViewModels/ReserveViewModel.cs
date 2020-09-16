@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace Res.AspAngular.ViewModels
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ReserveViewModel : BaseViewModel
     {
-        public int RestaurantId { get; set; }
 
-        public RestaurantViewModel Restaurant { get; set; }
+        public string Restaurant { get; set; }
 
         public DateTime DateReserve { get; set; }
 

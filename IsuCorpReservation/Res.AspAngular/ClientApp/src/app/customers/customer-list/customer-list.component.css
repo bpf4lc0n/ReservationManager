@@ -1,9 +1,47 @@
-mat-table{
-    height: auto;
+p { color:red; }
+
+.h1 {
+  color: red;
+  font-size: 15px;
+}
+
+.mat-card{
+  padding: 0;
+}
+
+.mat-card-header{
+  background-color: #f8f8f8;
+}
+
+.mat-card-content{
+  padding: 15px;
+  background-color: #efefef;
+}
+
+.mat-elevation-z8{
+  background-color: #fafafa;
+}
+  
+.mat-form-field {
+    font-size: 12px;
     width: 100%;
-    max-width: 100%;
   }
 
+.mat-row:nth-child(even){
+    background-color:white;
+    }
+
+.mat-row:nth-child(odd){
+    background-color:whitesmoke;
+    }
+
+.mat-table{
+  width: 100%;
+  height: 100%;
+}
+  
   td, th {
     width: 25%;
   }
+  
+  

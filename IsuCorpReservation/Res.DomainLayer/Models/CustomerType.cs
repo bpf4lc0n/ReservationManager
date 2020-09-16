@@ -18,7 +18,6 @@ namespace Res.DomainLayer.Models
         /// Contact Type value
         /// </summary>
         [Required]
-        [Column(TypeName = "nchar(20)")]
         public string ContactType { get; set; }
     }
 }

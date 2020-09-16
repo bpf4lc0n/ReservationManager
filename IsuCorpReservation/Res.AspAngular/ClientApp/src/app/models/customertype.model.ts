@@ -1,13 +1,9 @@
 export class CustomerTypeViewModel{
-    public Id : number;
-    public ContactType : string;
-    public UpdateDate : Date;   
-    public CreatedDate : Date;
+    public id : number;
+    public contactType : string;
 
     constructor(name : string)
     {
-        this.ContactType = name;
-        this.UpdateDate = new Date();
-        this.CreatedDate = new Date();
+        this.contactType = name;
     }
 }

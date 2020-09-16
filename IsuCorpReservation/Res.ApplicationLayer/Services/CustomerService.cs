@@ -37,6 +37,13 @@ namespace Res.ApplicationLayer.Services
             return mapped;
         }
 
+        public async Task<IEnumerable<CustomerModel>> GetCustomerByName(string Name)
+        {
+            var Customer = await _CustomerRepository.GetCustomerByName(Name);
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CustomerModel>>(Customer);
+            return mapped;
+        }
+
         public async Task<CustomerModel> Create(CustomerModel CustomerModel)
         {
             await ValidateCustomerIfExist(CustomerModel);
@@ -90,5 +97,6 @@ namespace Res.ApplicationLayer.Services
             if (existingEntity == null)
                 throw new ApplicationException($"{CustomerModel.ToString()} with this id is not exists");
         }
+
     }
 }

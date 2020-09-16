@@ -45,11 +45,22 @@ namespace Res.AspAngular.Controllers
             return mapped;
         }
 
+        [HttpPost()]
+        public async Task PostReserve(ReserveViewModel reserve)
+        {
+            var mapped = _mapper.Map<ReserveModel>(reserve);
+            if (mapped == null)
+                throw new Exception($"Entity could not be mapped.");
+
+            await _reserveAppService.Create(mapped);
+            _logger.LogInformation($"Entity successfully added - IndexPageService");
+        }
+
         // PUT: api/Reserves/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        async Task PutReserve(ReserveViewModel reserve)
+        public async Task PutReserve(ReserveViewModel reserve)
         {
             var mapped = _mapper.Map<ReserveModel>(reserve);
             if (mapped == null)
@@ -59,23 +70,7 @@ namespace Res.AspAngular.Controllers
             _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
 
-        // POST: api/Reserves
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<ReserveViewModel>> PostReserve(ReserveViewModel reserve)
-        {
-            var mapped = _mapper.Map<ReserveModel>(reserve);
-            if (mapped == null)
-                throw new Exception($"Entity could not be mapped.");
-
-            var entityDto = await _reserveAppService.Create(mapped);
-            _logger.LogInformation($"Entity successfully added - IndexPageService");
-
-            var mappedViewModel = _mapper.Map<ReserveViewModel>(entityDto);
-            return mappedViewModel;
-        }
-
+        
         // DELETE: api/Reserves/5
         [HttpDelete("{id}")]
         public async Task DeleteReserve(ReserveViewModel reserve)

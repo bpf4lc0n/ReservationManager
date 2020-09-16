@@ -23,13 +23,7 @@ namespace Res.DomainLayer.Models
         /// Restaurant Id
         /// </summary>
         [Required]
-        public int RestaurantId { get; set; }
-        /// <summary>
-        /// Restaurant value
-        /// </summary>
-        [Required]
-        [ForeignKey("RestaurantId")]
-        public Restaurant Restaurant { get; set; }
+        public string Restaurant { get; set; }
         /// <summary>
         /// Date of the reserve
         /// MinValue = GetDate()

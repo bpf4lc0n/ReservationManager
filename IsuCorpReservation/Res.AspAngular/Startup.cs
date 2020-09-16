@@ -31,6 +31,9 @@ namespace Res.AspAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            //services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             // In Reserveion, the Angular files will be served from this directory
@@ -106,14 +109,12 @@ namespace Res.AspAngular
             services.AddScoped<IReserveRepository, ReserveRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerTypeRepository, CustomerTypeRepository>();
-            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             // Add Application Layer
             services.AddScoped<IReserveService, ReserveService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerTypeService, CustomerTypeService>();
-            services.AddScoped<IRestaurantService, RestaurantService>();
 
             services.AddAutoMapper(typeof(Startup));
         }

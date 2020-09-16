@@ -1,3 +1,21 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+.card-container{
+  background-color:whitesmoke;
+}
+
+.center-h {
+  justify-content: center;
+}
+.center-v {
+  align-items: center;
+}
+.child {    
+  padding: .2rem;
+}
+
+.col-md-4{
+  justify-content: flex-end;
+}

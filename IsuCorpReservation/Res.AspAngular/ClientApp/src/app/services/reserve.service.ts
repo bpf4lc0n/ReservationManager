@@ -1,26 +1,35 @@
 import { Injectable, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 import { ReserveViewModel } from "../models/reserve.model";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
     providedIn : 'root',
 })
 export class ReserveService{
-    reserveViewModel: ReserveViewModel[];
+    reserveViewModel: Observable<ReserveViewModel[]>;
+    newReserve:Observable<ReserveViewModel>;
+    
     appUrl : string;  
     httpOptions = {
         headers : new HttpHeaders({
-            'Content-Type' : 'application-json'
+            'Content-Type' : 'application/json'
         })
     };
 
-    form : FormGroup = new FormGroup({
+    reserveCustomerForm : FormGroup = new FormGroup({
         $key : new FormControl(null),
         fc_Restaurant : new FormControl('', Validators.required),
-        fc_Date : new FormControl(new Date(), Validators.required)
+        fc_Date : new FormControl(new Date(), Validators.required),
+        fc_CustomerId : new FormControl(null),
+        fc_name : new FormControl('', Validators.required),
+        fc_contacttype : new FormControl('', Validators.required),
+        fc_Birthday : new FormControl(new Date(), Validators.required),
+        fc_Telephone : new FormControl('', [Validators.required, Validators.minLength(8)]),
+        fc_Description : new FormControl('')
     })
+    
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.appUrl = baseUrl;  
@@ -30,15 +39,23 @@ export class ReserveService{
         return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves');
     }
 
-    initializeFormGroup() {
-        this.form.setValue({
-            $key : null,
-            fc_Restaurant : "",
-            fc_Date : new Date()
-        });
-    }
+    AddReserve(res)  : Observable<ReserveViewModel>
+    { 
+        var reserve = new ReserveViewModel( res.fc_Date, res.fc_Restaurant, 1 );
+    
+        return this.http.post<ReserveViewModel>(this.appUrl +'api/Reserves',
+            JSON.stringify(reserve), this.httpOptions).pipe()  
+    }  
+  
+    EditReserve(res : ReserveViewModel)  
+    {          
+        return this.http.put<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id,
+            JSON.stringify(res), this.httpOptions).pipe()       
+    } 
 
-    getReserveDefault(){
-        return new ReserveViewModel(new Date(2020, 9, 17, 10, 0, 0, 0), '-', '-', '(000) 00 000 000', new Date(), '...');
-    }
+    DeleteEmployee(res : ReserveViewModel)  
+    {  
+        return this.http.delete<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id) 
+    
+    }  
 }

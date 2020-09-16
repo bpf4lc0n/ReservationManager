@@ -12,13 +12,11 @@ namespace Res.DomainLayer.Specifications
             : base(b => b.Id == id)
         {
             AddInclude(b => b.Customer);
-            AddInclude(b => b.Restaurant);
         }
 
         public ReserveWithCustomerAndRestaurantSpecification() : base(null)
         {
             AddInclude(b => b.Customer);
-            AddInclude(b => b.Restaurant);
         }
     }    
 }

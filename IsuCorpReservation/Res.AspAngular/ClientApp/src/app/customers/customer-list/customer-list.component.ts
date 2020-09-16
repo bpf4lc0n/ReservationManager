@@ -9,7 +9,7 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CustomerListComponent implements OnInit {
   customers : CustomerViewModel[];
-  columnDefinitions = ['Contact_name', 'Phone_number','Birth_date', 'Contact_type '];
+  columnDefinitions = ['Contact_name', 'Phone_number','Birth_date', 'Contact_type', 'Edit', 'Delete'];
 
   constructor(private customerService : CustomerService) {     
   }

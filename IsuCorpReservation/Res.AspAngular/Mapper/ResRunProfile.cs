@@ -12,7 +12,10 @@ namespace Res.AspAngular.Mapper
             CreateMap<ReserveModel, ReserveViewModel>();
             CreateMap<CustomerModel, CustomerViewModel>();
             CreateMap<CustomerTypeModel, CustomerTypeViewModel>();
-            CreateMap<RestaurantModel, RestaurantViewModel>();
+
+            CreateMap<ReserveViewModel, ReserveModel>();
+            CreateMap<CustomerTypeViewModel, CustomerTypeModel>();
+            CreateMap<CustomerViewModel, CustomerModel>();
         }
     }
 }

@@ -1,58 +1,116 @@
-<hr>
-<div class="row">
-    <div class="col-md-4">
-        <h1 style="color:red" translate>Create reservation</h1>
-    </div>
-    <div class="col-md-4">
-        <h6 style="color:grey">Lorem ipsum dolor sit amet consectetur 
-            adipisicing elit. Aspernatur ipsam quam sed autem dolore vel, 
-            alias tenetur, dignissimos tempore, rem quod totam?</h6>
-    </div>
-    <div class="col-md-4">
-        <button class="btn btn-accept" routerLink="/reserves-list" type="submit" style="color:white; background-color:grey" translate="">RESERVATIONS LIST</button>
-    </div>    
-</div>
-<hr>
-<div class="mat-elevation-z8">
-    <hr>
-    <app-customer-edit [customer]=customer></app-customer-edit>     
-    <hr>
-    <form [formGroup]="reserveService.form" class="normal-form">
-        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="80px">
-            <mat-grid-tile>
-                <div class="container">
-                    <input type="hidden" formControlName="$key">
-                    <mat-form-field appearance="outline">
-                        <input formControlName="fc_Restaurant" matInput placeholder="Restaurant ...">
-                        <mat-icon matPrefix>supervisor_account</mat-icon>
-                    </mat-form-field>  
-                    <mat-error translate>.error</mat-error>                         
+<mat-card class="col-md-12">
+    <mat-card-header>
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-4 align-self-center">
+                    <h4 style="color:red" translate>Create Reservation</h4>
                 </div>
-            </mat-grid-tile>
-        <mat-grid-tile>
-                <div class="container">
-                    <mat-form-field color="accent" appearance="outline">
-                        <input formControlName="fc_Date" matInput [matDatepicker]="picker2" placeholder="Date">                        
-                        <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
-                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
-                    </mat-form-field>   
-                    <mat-error translate>.error</mat-error>                       
+                <div class="col-md-5 align-self-center" hide="!getIsMobile()">
+                    <h6 style="color:grey" >Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit. Aspernatur ipsam quam sed autem dolore vel, 
+                        alias tenetur, dignissimos tempore, rem quod totam?</h6>
                 </div>
-            </mat-grid-tile>            
-        </mat-grid-list>
-    </form>
-    <div class="container">
-        <div class="button-row">
-            <button 
-                class="btn btn-success" 
-                type="submit"                         
-                (click)="onAddReserve()"
-                [disabled]="reserveService.form.invalid"
-                translate>SEND</button>  
-            <button class="btn btn-danger" (click)="onClear()">
-                CLEAR
-            </button> 
-        </div>     
-    </div>  
-</div>
+                <div class="col-md-3 align-self-center float-left">
+                    <div class="container" center-h center-v hide="!getIsMobile()">
+                    <button 
+                        class="btn btn-primary" 
+                        routerLink="/reserves-list" 
+                        type="submit" translate>RESERVATION LIST</button>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="container content">            
+            <form [formGroup]="reserveCustomerForm" (ngSubmit)="submitForm()" class="normal-form">
+                <div class="from-group">
+                    <div class="mat-elevation-z8">
+                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <input type="hidden" formControlName="$key">
+                                    <mat-form-field appearance="outline">
+                                        <input formControlName="fc_name" matInput placeholder="Contact Name ...">
+                                        <mat-icon matPrefix>supervisor_account</mat-icon>
+                                        <mat-error translate>.error</mat-error>
+                                    </mat-form-field>                           
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <mat-form-field appearance="outline">
+                                        <mat-icon matPrefix>language</mat-icon>
+                                        <mat-select formControlName="fc_contacttype" appearance="outline">                            
+                                            <mat-option *ngFor="let cType of ctTypes" [value]="cType.Name">
+                                            {{cType.name}}                        
+                                            </mat-option>
+                                        </mat-select>    
+                                    </mat-form-field>  
+                                    <mat-error translate>.error</mat-error>   
+                                </div>
+                            </mat-grid-tile>            
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <mat-form-field appearance="outline">
+                                        <input formControlName="fc_Telephone" matInput placeholder="Phone">
+                                        <mat-icon matPrefix>phone</mat-icon>
+                                    </mat-form-field>  
+                                    <mat-error translate>.error</mat-error>         
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <mat-form-field color="accent" appearance="outline">
+                                        <input formControlName="fc_Birthday" matInput [matDatepicker]="picker3" placeholder="Birth Date">                        
+                                        <mat-datepicker-toggle matPrefix [for]="picker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                                    </mat-form-field>                     
+                                </div>
+                            </mat-grid-tile>   
+                        </mat-grid-list>
+                    </div> 
+                    <div class="mat-elevation-z8" mat-elevation-z8-fill>
+                        <ckeditor data="Keep that Noise Down"></ckeditor>
+                    </div>    
+                    <div class="mat-elevation-z8">
+                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">  
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <input type="hidden" formControlName="$key">
+                                    <mat-form-field appearance="outline">
+                                        <input formControlName="fc_Restaurant" matInput placeholder="Restaurant ...">
+                                        <mat-icon matPrefix>supervisor_account</mat-icon>
+                                    </mat-form-field>  
+                                    <mat-error translate>.error</mat-error>                         
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <div class="container">
+                                    <mat-form-field color="accent" appearance="outline">
+                                        <input formControlName="fc_Date" matInput [matDatepicker]="picker2" placeholder="Date">                        
+                                        <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                                    </mat-form-field>   
+                                    <mat-error translate>.error</mat-error>                       
+                                </div>
+                            </mat-grid-tile>            
+                        </mat-grid-list>
+                    </div> 
+                    <div class="row justify-content-right">
+                        <div class="col-11">
+                        </div>
+                        <div class="col-1 align-self-center">
+                            <button 
+                                class="btn btn-success" 
+                                type="submit"
+                                [disabled]="reserveCustomerForm.invalid"
+                                translate>SEND</button>
+                        </div>
+                    </div> 
+                </div> 
+            </form>         
+        </div>  
+    </mat-card-content>
+</mat-card>
 

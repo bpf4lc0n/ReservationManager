@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HeaderComponent } from './header/header.component';
 import { CustomersComponent } from './customers/customers.component';
 import { CustomerListComponent } from './customers/customer-list/customer-list.component';
@@ -34,12 +33,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { HeaderMenuComponent } from './header/header-menu.component';
 import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
-import { RestaurantService } from './services/restaurant.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FetchDataComponent,
     HeaderComponent,
     HeaderMenuComponent,
     CustomersComponent,
@@ -94,7 +91,7 @@ import { RestaurantService } from './services/restaurant.service';
   ],
   //entryComponents: [ReserveListComponent],
   entryComponents: [ReserveEditDialogItem],
-  providers: [CustomerService, ReserveService, ContactTypeService, RestaurantService],
+  providers: [CustomerService, ReserveService, ContactTypeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

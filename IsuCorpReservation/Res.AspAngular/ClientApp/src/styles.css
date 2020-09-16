@@ -12,10 +12,6 @@ html,body{
   height: 100%;
 }
 
-div.container{
-  margin: 0px 40px;
-}
-
 .fill-remaining-space{
   flex: 1 1 auto;
 }
@@ -41,11 +37,16 @@ code {
   color: #fff;
   background-color: grey;
   border-color: grey;  
+  font-size: 13px;
+  border-radius: 0;
 }
+
 
 .btn-success{
   background-color: red;
   border-color: red;
+  font-size: 13px;
+  border-radius: 0;
 }
 
 .btn-danger{

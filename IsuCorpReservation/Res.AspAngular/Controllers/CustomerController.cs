@@ -32,5 +32,13 @@ namespace Res.AspAngular.Controllers
             var mapped = _mapper.Map<IEnumerable<CustomerViewModel>>(list);
             return mapped;
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<CustomerViewModel>> GetCustomersByName(string name)
+        {
+            var list = await _CustomerAppService.GetCustomerByName(name);
+            var mapped = _mapper.Map<IEnumerable<CustomerViewModel>>(list);
+            return mapped;
+        }
     }
 }

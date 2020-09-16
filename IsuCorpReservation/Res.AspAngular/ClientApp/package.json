@@ -26,6 +26,7 @@
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^6.0.0",
+    "@swimlane/ngx-datatable": "^17.1.0",
     "@tinymce/tinymce-angular": "^4.1.0",
     "angular-star-rating": "^4.0.0-beta.3",
     "aspnet-prerendering": "^3.0.1",

@@ -1,3 +1,47 @@
-mat-grid-tile{
+.mat-grid-tile{
     padding: 1px;
 }
+
+.h1 {
+  color: red;
+  font-size: 15px;
+}
+
+.ckeditor{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mat-card{
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .mat-card-header{
+    background-color: #f8f8f8;
+  }
+  
+  .mat-card-content{
+    padding: 15px;
+    background-color: #efefef;
+  }
+  
+  .mat-elevation-z8{
+    background-color: #fafafa;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: #efefef;
+  }
+
+  mat-elevation-z8-fill{
+    padding: 0;    
+  }
+    
+  .mat-form-field {
+      font-size: 12px;
+      width: 100%;
+    } 
+  

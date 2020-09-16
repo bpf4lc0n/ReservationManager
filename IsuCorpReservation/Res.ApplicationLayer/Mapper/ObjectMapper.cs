@@ -32,8 +32,6 @@ namespace Res.ApplicationLayer.Mapper
             CreateMap<Customer, CustomerModel>().ReverseMap();
 
             CreateMap<CustomerType, CustomerTypeModel>().ReverseMap();
-
-            CreateMap<Restaurant, RestaurantModel>().ReverseMap();
         }
     }
 }

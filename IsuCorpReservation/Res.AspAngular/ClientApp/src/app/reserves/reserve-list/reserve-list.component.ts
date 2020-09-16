@@ -37,12 +37,14 @@ export class ReserveListComponent implements OnInit, OnDestroy {
   }
 
   getReserves() {
-    this.reserveService.getReserves().subscribe(data => {this.Reserves = data; console.log('data', data); console.log('reserves', this.Reserves)});
+    this.reserveService.getReserves().subscribe((data) => {  this.Reserves = data; this.sortedData = data})  
+     ,err=>{console.log(err);  
+     } 
   }
 
   ngAfterViewInit() {
     //this.dataSource.paginator = this.paginator;
-   // this.dataSource.sort = this.sort;
+    //this.dataSource.sort = this.sort;
   }  
 
   ngOnDestroy() : void {
@@ -50,11 +52,15 @@ export class ReserveListComponent implements OnInit, OnDestroy {
   }
 
   onFavorite(res : ReserveViewModel){
-    res.FavoriteStatus = !res.FavoriteStatus;
+    res.favoriteStatus = !res.favoriteStatus;
+    this.reserveService.EditReserve(res) 
+        .subscribe(arg => {console.log('Reserve Favorite status is update successfully')});
   }
 
   onRate(res : ReserveViewModel, value : number){
-    res.Ranking = value;
+    res.ranking = value;
+    this.reserveService.EditReserve(res) 
+        .subscribe(arg => {console.log('Reserve Ranking is update successfully')});
   }
  
  getIsMobile():boolean{

@@ -13,15 +13,11 @@ namespace Res.DomainLayer
         /// <summary>
         /// 
         /// </summary>
-        IRestaurantRepository Customers { get; }
+        ICustomerRepository Customers { get; }
         /// <summary>
         /// 
         /// </summary>
         ICustomerTypeRepository CustomerType { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        IRestaurantRepository Restaurants { get; }
         /// <summary>
         /// 
         /// </summary>

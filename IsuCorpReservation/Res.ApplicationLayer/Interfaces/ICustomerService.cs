@@ -11,6 +11,7 @@ namespace Res.ApplicationLayer.Interfaces
     {
         Task<IEnumerable<CustomerModel>> GetCustomerList();
         Task<CustomerModel> GetCustomerById(int CustomerId);
+        Task<IEnumerable<CustomerModel>> GetCustomerByName(string Name);
         Task<CustomerModel> Create(CustomerModel CustomerModel);
         Task Update(CustomerModel CustomerModel);
         Task Delete(CustomerModel CustomerModel);
