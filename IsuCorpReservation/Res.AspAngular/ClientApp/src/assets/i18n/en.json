@@ -25,8 +25,8 @@
     "Clients List" : "Clients List",
     "CLIENTS LIST" : "CLIENTS LIST",
     "Create Client" : "Create Client",
-    "CREATE CLIENT": "Nuevo cliente",
-    "Edit Client":"Editar cliente",
+    "CREATE CLIENT": "CREATE CLIENT",
+    "Edit Client":"Edit Client",
     "List" : "List",
     "New" : "New",
     ".error" : "Mandatory",
@@ -35,5 +35,6 @@
     "Reservations Manager": "Reservations Manager",
     "Restaurant...":"Restaurant...",
     "Date":"Date",
-    "Reserve data no valid":"Reserve data no valid"
+    "Reserve data no valid":"Reserve data no valid",
+    "DELETE":"DELETE"
 }

@@ -11,5 +11,7 @@ namespace Res.DomainLayer.Interfaces
     public interface IReserveRepository : IRepository<Reserve>
     {
         Task<IEnumerable<Reserve>> GetReserveByPage(string field, string sortDirection, int pageIndex, int pageSize);
+
+        int GetReserveCount();
     }
 }

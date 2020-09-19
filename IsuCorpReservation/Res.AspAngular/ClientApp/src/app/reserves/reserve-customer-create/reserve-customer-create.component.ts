@@ -7,6 +7,7 @@ import { CustomerTypeViewModel } from 'src/app/models/customertype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
 import { MatSnackBar } from '@angular/material';
 import { CustomerService } from 'src/app/services/customer.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-reserve-customer-create',
@@ -27,7 +28,8 @@ export class ReserveCustomerCreateComponent implements OnInit {
     private customerService : CustomerService, 
     private reserveService : ReserveService, 
     private ctService : ContactTypeService,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private deviceService: DeviceDetectorService) { }
 
   ngOnInit() {   
     this.getContactType();   
@@ -47,21 +49,23 @@ export class ReserveCustomerCreateComponent implements OnInit {
       this.reserveCustomerForm.value.fc_Description, 1);
   }
 
-  submitForm() {
 
+  submitForm() {
     var reserve = new ReserveViewModel( this.reserveCustomerForm.value.fc_Date, 
       this.reserveCustomerForm.value.fc_Restaurant,  this.reserveCustomerForm.value.fc_contacttype );
     
     // if is a know customer must be check first
     if (this.customerExistent) {
         // if customer keep tha same (name is the only field to take into consideration in this case)
+        // the customer other fields will not be updated with the data in current form
         if (this.compareValue(this.customerExistent.name, this.customer.name)) {
           // reference to the know customer
           reserve.customerId = this.customerExistent.id;
-          // add the reserve
+          // add the new reserve
           this.AddReserve(reserve);
         }
         else {
+          // is a new customer so must be post first, and them the reserve
           this.AddCustomerAndReserve(reserve);
         }
       }
@@ -72,7 +76,7 @@ export class ReserveCustomerCreateComponent implements OnInit {
 
   AddReserve(reserve){
     this.reserveService.AddReserveDirect(reserve).subscribe(
-      dataRes => {
+      () => {
       this.openSnackBar('Reserve added');
       this.onClear();
     },
@@ -122,8 +126,12 @@ export class ReserveCustomerCreateComponent implements OnInit {
      this.initializeFormGroup();
   }
 
+  getIsMobile() : boolean {
+    return this.deviceService.isMobile();    
+  }
+
   getColAdjusment():number{
-   return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
+   return (this.getIsMobile())? 1 : 4 ;
   }
 
   getContactType() {
@@ -137,6 +145,9 @@ export class ReserveCustomerCreateComponent implements OnInit {
     });
   }
 
+  // If the input Name match with someone on the DB
+  // take the first item of the list as the Customer
+  // initialize telephone and dateBirth with the stored values
   CustomerKnow(event : Event) {
       var inputName = (<HTMLInputElement>event.target).value;
       if (!this.customerExistent || inputName !== this.customerExistent.name){        

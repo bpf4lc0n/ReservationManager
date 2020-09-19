@@ -41,10 +41,12 @@ export class ReserveService{
     this.appUrl = baseUrl;  
   }    
     
+    // standard get
     getReserves() : Observable<ReserveViewModel[]> {
         return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves').pipe();
     }
 
+    // server base pagination with sorting include
     getReservesPage(sortField : string, sortOrder : string, pageIndex : number, pageSize : number) : Observable<ReserveViewModel[]> {
         let params = new HttpParams();
         // string field, string sortDirection, int pageIndex, int pageSize
@@ -57,6 +59,10 @@ export class ReserveService{
             map((reserves : ReserveViewModel[]) => reserves),
             catchError(err=>throwError(err))
         );
+    }
+
+    getReservesCount() : Observable<number> {
+        return this.http.get<number>(this.appUrl+'api/Reserves/GetReservesCount').pipe();
     }
 
     getReserveById(id : number) : Observable<ReserveViewModel> {
@@ -81,10 +87,5 @@ export class ReserveService{
     {          
         return this.http.put<ReserveViewModel>(this.appUrl+'api/Reserves/' + id,
             JSON.stringify(res), this.httpOptions).pipe()       
-    } 
-
-    DeleteEmployee(res : ReserveViewModel)  
-    {  
-        return this.http.delete<ReserveViewModel>(this.appUrl+'api/Reserves/' + res.id);    
     } 
 }

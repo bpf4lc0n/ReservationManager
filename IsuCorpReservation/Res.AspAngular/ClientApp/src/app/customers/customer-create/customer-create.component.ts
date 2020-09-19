@@ -5,6 +5,7 @@ import { CustomerViewModel } from 'src/app/models/customer.model';
 import { CustomerTypeViewModel } from 'src/app/models/customertype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-customer-create',
@@ -19,11 +20,11 @@ export class CustomerCreateComponent implements OnInit {
   constructor(public fb : FormBuilder, 
     private customerService : CustomerService, 
     private ctService : ContactTypeService,
-    private _snackBar: MatSnackBar) {     
+    private _snackBar: MatSnackBar,
+    private deviceService: DeviceDetectorService) {     
   }
 
   ngOnInit() {
-
     this.getContactType();
     
     this.customerForm = this.fb.group({
@@ -41,14 +42,18 @@ export class CustomerCreateComponent implements OnInit {
     this.ctService.getCustomerTypes().subscribe(data => this.ctTypes = data);
   }
 
+  getIsMobile() : boolean {
+    return this.deviceService.isMobile();    
+  }
+
   getColAdjusment():number{
-    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
+    return this.deviceService.isMobile() ? 1 : 4;
    }
 
-   submitForm() {
+  submitForm() {
     this.customerService.AddCustomer(this.customerForm.value) 
     .subscribe(
-      data => {
+      () => {
         this.openSnackBar('Customer added');
       },
       error => {

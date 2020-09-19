@@ -15,5 +15,6 @@ namespace Res.ApplicationLayer.Interfaces
         Task<ReserveModel> Create(ReserveModel ReserveModel);
         Task Update(ReserveModel ReserveModel);
         Task Delete(ReserveModel ReserveModel);
+        int GetReserveCount();
     }
 }

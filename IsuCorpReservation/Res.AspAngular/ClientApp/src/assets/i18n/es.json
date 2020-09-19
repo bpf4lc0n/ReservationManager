@@ -35,5 +35,6 @@
     "Reservations Manager": "Control de reservaciones",
     "Restaurant...":"Restaurante",
     "Date":"Fecha de reservación",
-    "Reserve data no valid":"Los datos de la reserva no son válidos"
+    "Reserve data no valid":"Los datos de la reserva no son válidos",
+    "DELETE":"Eliminar"
 }

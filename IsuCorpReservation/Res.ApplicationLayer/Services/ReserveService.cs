@@ -99,5 +99,9 @@ namespace Res.ApplicationLayer.Services
             if (existingEntity == null)
                 throw new ApplicationException($"{ReserveModel} with this id is not exists");
         }
+
+        public int GetReserveCount() {
+            return _ReserveRepository.GetReserveCount();
+        }
     }
 }

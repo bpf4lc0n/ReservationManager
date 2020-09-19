@@ -6,6 +6,7 @@ import { CustomerTypeViewModel } from 'src/app/models/customertype.model';
 import { ContactTypeService } from 'src/app/services/contacttype.service';
 import { CustomerViewModel} from '../../models/customer.model';
 import { CustomerService } from '../../services/customer.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-customer-edit',
@@ -20,7 +21,8 @@ export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeVi
     private customerService : CustomerService, 
     private ctService : ContactTypeService,
     private route : ActivatedRoute,
-    private _snackBar: MatSnackBar) {     
+    private _snackBar: MatSnackBar, 
+    private deviceService: DeviceDetectorService) {     
   }
 
   ngOnInit() {
@@ -58,8 +60,12 @@ export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeVi
     this.ctService.getCustomerTypes().subscribe(data => {this.ctTypes = data});
   }
 
+  getIsMobile() : boolean {
+    return this.deviceService.isMobile();    
+  }
+  
   getColAdjusment():number{
-    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
+    return this.deviceService.isMobile() ? 1 : 4;
    }
 
    submitForm() {

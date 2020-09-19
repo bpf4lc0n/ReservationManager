@@ -36,15 +36,16 @@ namespace Res.Infra.DataLayer.Repositories
             return await GetPageAsync(null, orderBy, pageIndex, pageSize, true);
         }
 
+        /// <summary>
+        /// Get a number of rows from Reserves for Pagination propose
+        /// </summary>
+        /// <param name="field">Data base field name that will serve as Sort By value</param>
+        /// <param name="sortDirection">ASC o DESC, Sql mode</param>
+        /// <param name="pageIndex">Current page view</param>
+        /// <param name="pageSize">The number of elements to return</param>
+        /// <returns></returns>
         public async Task<IEnumerable<Reserve>> GetReserveByPage(string field, string sortDirection, int pageIndex, int pageSize)
         {
-            /*
-             *  @PageNo INT ,  
-	            @PageSize INT ,  
-	            @SortField VARCHAR(15),
-	            @SortOrder VARCHAR(4)
-             */
-
             try
             {
                 
@@ -63,6 +64,22 @@ namespace Res.Infra.DataLayer.Repositories
                 throw error;
             }
             
+        }
+
+        /// <summary>
+        /// Return the total number of reserves for inicialize the paginator and then get de pages dynamically
+        /// </summary>
+        /// <returns>0 is some error happens</returns>
+        public int GetReserveCount()
+        {
+            try
+            {
+                return _dbContext.Reserves.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

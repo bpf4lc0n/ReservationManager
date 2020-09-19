@@ -3,14 +3,17 @@
         <div class="container content">
             <div class="row">
                 <div class="col-md-4 align-self-center">
+                    <h6 translate style="color:grey; font-size: 10px; text-align: right; margin-top: 2px;"
+                        routerLink="/customers-create" 
+                        [hidden]="!getIsMobile()"><i>CREATE CLIENT</i></h6>
                     <h4 style="color:red" translate>Clients List</h4>
                 </div>
-                <div class="col-md-5 align-self-center" hide="!getIsMobile()">
+                <div class="col-md-5 align-self-center" [hidden]="getIsMobile()">
                     <h6 style="color:grey" >Lorem ipsum dolor sit amet, consectetur 
                         adipisicing elit, sed do eiusmod tempor incididunt ut</h6>
                 </div>
                 <div class="col-md-3 align-self-center float-left">
-                    <div class="container" center-h center-v hide="!getIsMobile()">
+                    <div class="container" [hidden]="getIsMobile()">
                     <button 
                         class="btn btn-primary" 
                         routerLink="/customers-create" 
@@ -25,7 +28,7 @@
             <div class="mat-elevation-z8">
 
                 <div class="spinner-container" *ngIf="!dataSource">
-                    <mat-spinner color="warm"></mat-spinner>
+                    <mat-progress-bar mode="indeterminate" color="warm"></mat-progress-bar>
                 </div>
 
                 <mat-grid-list cols="1" rowHeight="500px">
@@ -52,23 +55,28 @@
                             <ng-container matColumnDef="Contact_type">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header translate>Contact type</th>
                                 <td mat-cell fxFlex="25%" *matCellDef="let row">
-                                    -
+                                    <mat-select [(ngModel)]="row.contactTypeId" appearance="outline">                            
+                                        <mat-option *ngFor="let cType of ctTypes" 
+                                            [value]="cType.id">
+                                        {{cType.contactType}}                        
+                                        </mat-option>
+                                    </mat-select>    
                                 </td>
                             </ng-container>                    
                             <ng-container matColumnDef="Edit">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                                <td mat-cell *matCellDef="let row; let i = index;">
+                                <td mat-cell fxFlex="10%" *matCellDef="let row; let i = index;">
                                         <button class="btn btn-primary" href=""  routerLink="/customers-edit/{{row.id}}" routerLinkActive="router-link-active" translate>EDIT</button>
                                 </td>
                             </ng-container> 
                             <ng-container matColumnDef="Delete">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                                <td mat-cell *matCellDef="let row; let i = index;">
+                                <td mat-cell fxFlex="10%" *matCellDef="let row; let i = index;">
                                     <button class="btn btn-primary" href="" routerLinkActive="router-link-active" (click)="openDialog(row)"  translate>DELETE</button>
                                 </td>
                             </ng-container> 
-                            <tr mat-header-row *matHeaderRowDef="columnDefinitions"></tr>
-                            <tr mat-row *matRowDef="let row; columns: columnDefinitions;"></tr> 
+                            <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+                            <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr> 
                         </table>                         
                     </mat-grid-tile> 
                 </mat-grid-list>

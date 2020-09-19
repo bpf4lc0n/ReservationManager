@@ -2,55 +2,61 @@
     <mat-card-header>
         <div class="container content">
             <div class="row">
+                <div class="container" [hidden]="!getIsMobile()">             
+                    <h6 translate style="color:grey; font-size: 10px; text-align: right; margin-top: 2px;"
+                        routerLink="/reserve-create" 
+                        hide="!getIsMobile()"><i>CREATE RESERVATION</i></h6>
+                </div>  
                 <div class="col-md-4 align-self-center">
                     <h4 style="color:red" translate>Reservations List</h4>
                 </div>
-                <div class="col-md-5 align-self-center" hide="!getIsMobile()">
+                <div class="col-md-5 align-self-center" [hidden]="getIsMobile()">
                     <h6 style="color:grey" >Lorem ipsum dolor sit amet, consectetur 
                         adipisicing elit, sed do eiusmod tempor incididunt ut</h6>
                 </div>
                 <div class="col-md-3 align-self-center float-left">
-                    <div class="container" center-h center-v hide="!getIsMobile()">
+                    <div class="container" [hidden]="getIsMobile()">
                     <button 
                         class="btn btn-primary" 
-                        routerLink="/reserve-create" 
-                        hide="getIsMobile()"
+                        routerLink="/reserve-create"
                         type="submit" translate>CREATE RESERVATION</button>
-                    </div>
+                    </div>                                      
                 </div>    
             </div>
         </div>
 </mat-card-header>
 <mat-card-content>
-        <div class="container content">
+        <div class="container">
             <div class="mat-elevation-z8">
                 <mat-grid-list cols="1" rowHeight="80px">
                     <mat-grid-tile>    
-                    <form [formGroup]="listForm">                 
-                        <mat-form-field appearance="outline">
-                            <mat-icon matPrefix>format_line_spacing</mat-icon>
-                            <mat-select     
-                                    formControlName='fc_SortValue'
-                                    placeholder="{{'Sort by'|translate}}"
-                                    (selectionChange)="changeSortedColumn($event)" 
-                                    appearance="outline">                            
-                                    <mat-option *ngFor="let sortEl of sortingValues" 
-                                    [value]="sortEl.option">
-                                {{sortEl.sorting|translate}}                        
-                                    </mat-option>
-                            </mat-select>    
-                        </mat-form-field>  
-                    </form>
+                        <form [formGroup]="listForm" style="margin-right:5px; width:100%;">
+                            <div class="from-group">
+                                <mat-form-field appearance="outline" style="width: 50%;">
+                                    <mat-icon matPrefix>format_line_spacing</mat-icon>
+                                    <mat-select     
+                                            formControlName='fc_SortValue'
+                                            placeholder="{{'Sort by'|translate}}"
+                                            (selectionChange)="changeSortedColumn($event)" 
+                                            appearance="outline">                
+                                            <mat-option *ngFor="let sortEl of sortingValues" 
+                                            [value]="sortEl.option">
+                                                {{sortEl.sorting|translate}}                        
+                                            </mat-option>
+                                    </mat-select>    
+                                </mat-form-field>  
+                            </div>
+                        </form>
                     </mat-grid-tile>
                 </mat-grid-list>
 
             <div *ngIf="!Reserves">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <mat-progress-bar mode="indeterminate" color="warm"></mat-progress-bar>
             </div>
 
             <mat-grid-list cols="1" rowHeight="500px">
                 <mat-grid-tile>
-                <table mat-table *ngIf="Reserves"  [dataSource]="dataSource">    
+                <table mat-table *ngIf="Reserves"  [dataSource]="dataSource" style="margin:10px">    
                     <ng-container matColumnDef="Icon">
                         <th mat-header-cell with="5%" *matHeaderCellDef></th>
                         <td mat-cell with="5%" *matCellDef="let row">
@@ -64,8 +70,8 @@
 
                 <!-- Number Column -->
                     <ng-container matColumnDef="Restaurant">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let row">     
+                        <th mat-header-cell with="40%" *matHeaderCellDef></th>
+                        <td mat-cell  with="40%" *matCellDef="let row">     
                             <div style="font-weight: bolder">{{row.restaurant}}</div>
                             <div>{{row.dateReserve | date:'MMMM d, y, h:mm:ss a'}}</div>
                         </td>
@@ -73,8 +79,8 @@
                         
                 <!-- Created Column -->
                     <ng-container matColumnDef="Ranking">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let row">
+                        <th mat-header-cell  with="20%" *matHeaderCellDef></th>
+                        <td mat-cell  with="20%" *matCellDef="let row">
                             <div translate>Ranking</div>
                             <div>
                                 <span class="fas fa-star" [class.rate]= "row.ranking >= 1"  (click)="onRate(row, 1)"></span>
@@ -87,8 +93,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="Favorite">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let row;">      
+                        <th mat-header-cell  with="25%" *matHeaderCellDef></th>
+                        <td mat-cell  with="25%" *matCellDef="let row;">      
                             <button 
                                 class="btn btn-submit"                    
                                 (click)="onFavorite(row)"
@@ -96,13 +102,13 @@
                                 [ngStyle]="{'color': row.favoriteStatus ? 'grey' : 'black'}"
                                 translate>Add Favorites                  
                             </button>  
-                            <mat-icon (click)="onFavorite(row)" [ngStyle]="{'color': row.favoriteStatus ? 'red' : 'black' }" >favorite_border</mat-icon>                  
+                            <mat-icon class="mat-icon-margin" (click)="onFavorite(row)" [ngStyle]="{'color': row.favoriteStatus ? 'red' : 'black' }" >favorite_border</mat-icon>                  
                         </td>
                     </ng-container>
             
                     <ng-container matColumnDef="Edit">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let row; let i = index;">
+                        <th mat-header-cell  with="15%" *matHeaderCellDef></th>
+                        <td mat-cell with="15%" *matCellDef="let row; let i = index;">
                             <button class="btn btn-primary" routerLink="/reserve-edit/{{row.id}}" translate>EDIT</button>
                         </td>
                     </ng-container> 
@@ -120,7 +126,7 @@
 
                     <mat-paginator 
                         showFirstLastButtons
-                        [length]="300"
+                        [length]="config.totalItems"
                         [pageSize]="config.itemsPerPage"
                         (page)="pageEvent = $event; onPaginationChange($event)"></mat-paginator> 
                 </mat-grid-tile>

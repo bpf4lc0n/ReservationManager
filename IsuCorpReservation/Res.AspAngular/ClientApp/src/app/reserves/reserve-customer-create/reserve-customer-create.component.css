@@ -43,5 +43,6 @@
   .mat-form-field {
       font-size: 12px;
       width: 100%;
+      border-radius: 0%;
     } 
   

@@ -59,6 +59,13 @@ namespace Res.AspAngular.Controllers
             return mapped;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public int GetReservesCount()
+        {
+            return _reserveAppService.GetReserveCount();
+        }
+
         /// <summary>
         /// 
         /// </summary>

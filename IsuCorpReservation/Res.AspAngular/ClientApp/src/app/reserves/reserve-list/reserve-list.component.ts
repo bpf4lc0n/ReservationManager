@@ -5,6 +5,7 @@ import { ReserveSort } from 'src/app/models/reserveSort.model';
 import {tap, map} from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-reserve-list',
@@ -12,9 +13,11 @@ import { MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
   styleUrls: ['./reserve-list.component.css']
 })
 export class ReserveListComponent implements OnInit {
+  listForm   : FormGroup;
+  config: any;
   Reserves : ReserveViewModel[];
   dataSource : MatTableDataSource<ReserveViewModel>; 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false, read: true}) paginator: MatPaginator;
 
   sortingSelected : ReserveSort;
   sortingValues : ReserveSort[] = [
@@ -23,13 +26,7 @@ export class ReserveListComponent implements OnInit {
     {sorting : 'By Alphabetic Ascending', direction : 'ASC', field : 'Restaurant', option : 3},
     {sorting : 'By Alphabetic Descending', direction : 'DESC', field : 'Restaurant', option : 4},
     {sorting : 'By Ranking', direction : 'ASC', field : 'Ranking', option : 5}
-  ]
-
-  listForm   : FormGroup;
-  config: any;
-
-  selectedColumn : string;
-  pos : number;
+  ]  
 
   columnDefinitions = [
     { def: 'Icon', showMobile: false },
@@ -40,8 +37,10 @@ export class ReserveListComponent implements OnInit {
     ];
 
 
-  constructor(private reserveService : ReserveService,
-    public fb: FormBuilder) { 
+  constructor(
+    private reserveService : ReserveService,
+    public fb: FormBuilder, 
+    private deviceService: DeviceDetectorService) { 
 
       this.sortingSelected = new ReserveSort('By Date Ascending', 'ASC', 'DateReserve', 1);
 
@@ -50,34 +49,29 @@ export class ReserveListComponent implements OnInit {
       })
 
       this.config = {
-        itemsPerPage: 10,
+        itemsPerPage: 8,
         currentPage: 1,
         totalItems: 300
       };
       
       this.getReserves();
   }
-
-  ngOnInit() {
-    
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
   getReserves() {
     this.reserveService.getReservesPage(this.sortingSelected.field, this.sortingSelected.direction, this.config.currentPage, this.config.itemsPerPage).pipe(
       tap(res=>console.log(res)),
-      map((resData : ReserveViewModel[])=> {this.Reserves = resData; this.dataSource = new MatTableDataSource(resData); this.dataSource.paginator = this.paginator; this.dataSource.paginator.length = 300;})
+      map((resData : ReserveViewModel[])=> {
+        this.Reserves = resData;
+         this.dataSource = new MatTableDataSource(resData); 
+         this.dataSource.paginator = this.paginator;})
     ).subscribe()  
      , err=>{console.log(err);  
      } 
-  }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }  
-
-  pageChanged(event){
-    this.config.currentPage = event;
-    console.log('page ' + event)
+     this.reserveService.getReservesCount().subscribe(data => this.config.totalItems = data);
   }
 
   onPaginationChange(event : PageEvent){
@@ -97,11 +91,11 @@ export class ReserveListComponent implements OnInit {
         .subscribe(arg => {console.log('Reserve Ranking is update successfully')});
   }
  
- getIsMobile():boolean{
-  return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) ;
- }
+  getIsMobile() : boolean{
+  return this.deviceService.isMobile() ;
+  }
 
- getDisplayedColumns(): string[] {
+  getDisplayedColumns(): string[] {
     const isMobile = this.getIsMobile();
     return this.columnDefinitions
     .filter(cd => !isMobile || cd.showMobile)

@@ -4,6 +4,7 @@ import { ReserveService } from '../../services/reserve.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-reserve-edit',
@@ -18,7 +19,8 @@ export class ReserveEditComponent implements OnInit {
   constructor(public fb : FormBuilder,
               private reserveService : ReserveService,
               private route: ActivatedRoute,
-              private _snackBar: MatSnackBar) {     
+              private _snackBar: MatSnackBar,
+              private deviceService: DeviceDetectorService) {     
   }
 
   ngOnInit() {     
@@ -71,7 +73,11 @@ submitForm() {
     });
   }
 
+  getIsMobile() : boolean {
+    return this.deviceService.isMobile();    
+  }
+
   getColAdjusment():number{
-    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? 1 : 4 ;
-   }
+   return (this.getIsMobile())? 1 : 4 ;
+  }
 }

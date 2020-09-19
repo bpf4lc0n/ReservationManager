@@ -34,6 +34,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
 import { HeaderMenuComponent } from './header/header-menu.component';
 import { CustomerCreateComponent } from './customers/customer-create/customer-create.component';
 import { CustomerDeleteDialog } from './customers/customer-delete-dialog/customer-delete-dialog.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { CustomerDeleteDialog } from './customers/customer-delete-dialog/custome
     MatSnackBarModule,
     MatOptionModule,
     MatSortModule,
+
     
     TranslateModule.forRoot({
       loader:{
@@ -94,7 +96,7 @@ import { CustomerDeleteDialog } from './customers/customer-delete-dialog/custome
   ],
   //entryComponents: [ReserveListComponent],
   entryComponents: [CustomerDeleteDialog],
-  providers: [CustomerService, ReserveService, ContactTypeService],
+  providers: [CustomerService, ReserveService, ContactTypeService, DeviceDetectorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

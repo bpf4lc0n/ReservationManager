@@ -6,13 +6,13 @@ import { CustomerViewModel } from "src/app/models/customer.model";
     selector: 'customer-delete-dialog',
     templateUrl: './customer-delete-dialog.component.html',
   })
-  export class CustomerDeleteDialog {
+export class CustomerDeleteDialog {
   
-    constructor(
+constructor(
       public dialogRef: MatDialogRef<CustomerDeleteDialog>,
       @Inject(MAT_DIALOG_DATA) public data: CustomerViewModel) {}
   
-    onNoClick(): void {
+onNoClick(): void {
       this.dialogRef.close();
     }  
   }

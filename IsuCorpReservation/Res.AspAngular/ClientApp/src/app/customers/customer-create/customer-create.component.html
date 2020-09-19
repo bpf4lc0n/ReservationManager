@@ -3,14 +3,17 @@
         <div class="container content">
             <div class="row">
                 <div class="col-md-4 align-self-center">
+                    <h6 translate style="color:grey; font-size: 10px; text-align: right; margin-top: 2px;"
+                        routerLink="/customers-list" 
+                        hide="!getIsMobile()"><i>CLIENTS LIST</i></h6>
                     <h4 style="color:red" translate>Create Client</h4>
                 </div>
-                <div class="col-md-5 align-self-center" hide="!getIsMobile()">
+                <div class="col-md-5 align-self-center" [hidden]="getIsMobile()">
                     <h6 style="color:grey" >Lorem ipsum dolor sit amet, consectetur 
                         adipisicing elit, sed do eiusmod tempor incididunt ut</h6>
                 </div>
                 <div class="col-md-3 align-self-center float-left">
-                    <div class="container" center-h center-v hide="!getIsMobile()">
+                    <div class="container" [hidden]="getIsMobile()">
                     <button 
                         class="btn btn-primary" 
                         routerLink="/customers-list" 
@@ -25,14 +28,13 @@
             <form [formGroup]="customerForm" (ngSubmit)="submitForm()" class="normal-form">
                 <div class="from-group">
                     <div class="mat-elevation-z8">
-                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">
+                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="60px">
                             <mat-grid-tile>
                                 <div class="container">
                                     <input type="hidden" formControlName="$key">
                                     <mat-form-field appearance="outline">
-                                        <input formControlName="fc_name" type="date" matInput placeholder="{{'Contact Name ...'| translate}}">
-                                        <mat-icon matPrefix>supervisor_account</mat-icon>
-                                        <mat-error translate>.error</mat-error>
+                                        <input formControlName="fc_name" matInput placeholder="{{'Contact Name ...'| translate}}">
+                                        <mat-icon matPrefix>supervisor_account</mat-icon>                                        
                                     </mat-form-field>                           
                                 </div>
                             </mat-grid-tile>
@@ -46,8 +48,7 @@
                                             {{cType.contactType}}                        
                                             </mat-option>
                                         </mat-select>    
-                                    </mat-form-field>  
-                                    <mat-error translate>.error</mat-error>   
+                                    </mat-form-field>                                         
                                 </div>
                             </mat-grid-tile>            
                             <mat-grid-tile>
@@ -55,17 +56,28 @@
                                     <mat-form-field appearance="outline">
                                         <input formControlName="fc_Telephone" matInput placeholder="{{'Phone'| translate}}">
                                         <mat-icon matPrefix>phone</mat-icon>
-                                    </mat-form-field>  
-                                    <mat-error translate>.error</mat-error>         
+                                    </mat-form-field>                                               
                                 </div>
                             </mat-grid-tile>
                             <mat-grid-tile>
                                 <div class="container">
-                                    <mat-form-field color="accent" appearance="outline">
-                                        <input formControlName="fc_Birthday" matInput [matDatepicker]="picker3" placeholder="{{'Birth Date'| translate}}">                        
-                                        <mat-datepicker-toggle matPrefix [for]="picker3"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
-                                    </mat-form-field>                     
+                                    <input 
+                                    formControlName="fc_Birthday" 
+                                    Input type="date" 
+                                    placeholder="dd/MM/yyyy"
+                                    style="margin: 2px; 
+                                    padding: 2px; 
+                                    outline-color: #efefef; 
+                                    border-color: grey;  
+                                    height: 47px;
+                                    border-style: solid; 
+                                    border-bottom-color: #efefef; 
+                                    border-top-color: #efefef;
+                                    border-right-color: #efefef;
+                                    border-left-color: #efefef; 
+                                    border-radius: 5px;
+                                    background-color:  #f8f8f8; 
+                                    font-size: 12px;">                    
                                 </div>
                             </mat-grid-tile>   
                         </mat-grid-list>

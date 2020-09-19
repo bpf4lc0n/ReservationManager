@@ -2,15 +2,18 @@
     <mat-card-header>
         <div class="container content">
             <div class="row">
-                <div class="col-md-4 align-self-center">
+                <div class="col-md-4 align-self-center">                    
+                    <h6 translate style="color:grey; font-size: 10px; text-align: right; margin-top: 2px;"
+                        routerLink="/reserves-list" 
+                        [hidden]="!getIsMobile()"><i>RESERVATION LIST</i></h6>
                     <h4 style="color:red" translate>Create Reservation</h4>
                 </div>
-                <div class="col-md-5 align-self-center" hide="!getIsMobile()">
+                <div class="col-md-5 align-self-center">
                     <h6 style="color:grey" >Lorem ipsum dolor sit amet, consectetur 
                         adipisicing elit, sed do eiusmod tempor incididunt ut</h6>
                 </div>
                 <div class="col-md-3 align-self-center float-left">
-                    <div class="container" center-h center-v hide="!getIsMobile()">
+                    <div class="container" [hidden]="getIsMobile()">
                     <button 
                         class="btn btn-primary" 
                         routerLink="/reserves-list" 
@@ -25,14 +28,13 @@
             <form [formGroup]="reserveCustomerForm" (ngSubmit)="submitForm()" class="normal-form">
                 <div class="from-group">
                     <div class="mat-elevation-z8">
-                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">
+                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="60px">
                             <mat-grid-tile>
                                 <div class="container">
                                     <input type="hidden" formControlName="$key">
                                     <mat-form-field appearance="outline">
                                         <input formControlName="fc_name" matInput [(ngModel)]="customer.name" (change)="CustomerKnow($event)" placeholder="{{'Contact Name ...'| translate}}">
                                         <mat-icon matPrefix>supervisor_account</mat-icon>
-                                        <mat-error translate>.error</mat-error>
                                     </mat-form-field>                           
                                 </div>
                             </mat-grid-tile>
@@ -46,8 +48,7 @@
                                             {{cType.contactType}}                        
                                             </mat-option>
                                         </mat-select>    
-                                    </mat-form-field>  
-                                    <mat-error translate>.error</mat-error>   
+                                    </mat-form-field>    
                                 </div>
                             </mat-grid-tile>            
                             <mat-grid-tile>
@@ -55,18 +56,29 @@
                                     <mat-form-field appearance="outline">
                                         <input formControlName="fc_Telephone" [(ngModel)]="customer.telephone" matInput placeholder="{{'Phone'| translate}}">
                                         <mat-icon matPrefix>phone</mat-icon>
-                                    </mat-form-field>  
-                                    <mat-error translate>.error</mat-error>         
+                                    </mat-form-field>         
                                 </div>
                             </mat-grid-tile>
                             <mat-grid-tile>
-                                <div class="container">
-                                    <mat-form-field color="accent" appearance="outline">
-                                        <input formControlName="fc_Birthday" type="date" [matDatepicker]="picker1" matInput [(ngModel)]="customer.dateBirth" placeholder="{{'Birth Date'| translate}}">                                                               
-                                        <mat-datepicker-toggle matPrefix [for]="picker1"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker1 color="primary"></mat-datepicker>                                    
-                                    </mat-form-field>                     
-                                </div>
+                                    <div class="container">
+                                        <input 
+                                            formControlName="fc_Birthday" 
+                                            Input type="date" 
+                                            placeholder="dd/MM/yyyy"
+                                            style="margin: 2px; 
+                                            padding: 2px; 
+                                            outline-color: #efefef; 
+                                            border-color: grey;  
+                                            height: 47px;
+                                            border-style: solid; 
+                                            border-bottom-color: #efefef; 
+                                            border-top-color: #efefef;
+                                            border-right-color: #efefef;
+                                            border-left-color: #efefef; 
+                                            border-radius: 5px;
+                                            background-color:  #f8f8f8; 
+                                            font-size: 12px;">                    
+                                        </div>  
                             </mat-grid-tile>   
                         </mat-grid-list>
                     </div> 
@@ -74,15 +86,14 @@
                         <ckeditor formControlName="fc_Description" data="customer.description"></ckeditor>
                     </div>    
                     <div class="mat-elevation-z8">
-                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">  
+                        <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="60px">  
                             <mat-grid-tile>
                                 <div class="container">
                                     <input type="hidden" formControlName="$key">
                                     <mat-form-field appearance="outline">
                                         <input formControlName="fc_Restaurant" matInput placeholder="{{'Restaurant...'| translate}}">
                                         <mat-icon matPrefix>restaurant</mat-icon>
-                                    </mat-form-field>  
-                                    <mat-error translate>.error</mat-error>                         
+                                    </mat-form-field>                        
                                 </div>
                             </mat-grid-tile>
                             <mat-grid-tile>
@@ -93,8 +104,7 @@
                                             matInput
                                             type="datetime-local" 
                                             placeholder="{{'Date'|translate}}">
-                                    </mat-form-field>   
-                                    <mat-error translate>.error</mat-error>                       
+                                    </mat-form-field>                    
                                 </div>
                             </mat-grid-tile>            
                         </mat-grid-list>

@@ -7,6 +7,22 @@
   font-size: 15px;
 }
 
+.mat-input-date:style{
+  margin: 2px; 
+  padding: 2px; 
+  outline-color: #efefef; 
+  border-color: grey;  
+  height: 47px;
+  border-style: solid; 
+  border-bottom-color: #efefef; 
+  border-top-color: #efefef;
+  border-right-color: #efefef;
+  border-left-color: #efefef; 
+  border-radius: 5px;
+  background-color:  #f8f8f8; 
+  font-size: 12px;
+}
+
 .ckeditor{
     display: flex;
     flex-direction: column;
