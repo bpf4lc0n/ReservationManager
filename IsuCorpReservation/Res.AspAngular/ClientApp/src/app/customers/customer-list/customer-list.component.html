@@ -49,7 +49,7 @@
                             <ng-container matColumnDef="Birth_date">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header translate>Birth date</th>
                                 <td mat-cell fxFlex="25%" *matCellDef="let row">
-                                    {{row.dateBirth}}
+                                    {{row.dateBirth|date:'dd/MM/yyyy'}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="Contact_type">
@@ -64,13 +64,13 @@
                                 </td>
                             </ng-container>                    
                             <ng-container matColumnDef="Edit">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell fxFlex="10%" *matCellDef="let row; let i = index;">
                                         <button class="btn btn-primary" href=""  routerLink="/customers-edit/{{row.id}}" routerLinkActive="router-link-active" translate>EDIT</button>
                                 </td>
                             </ng-container> 
                             <ng-container matColumnDef="Delete">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell fxFlex="10%" *matCellDef="let row; let i = index;">
                                     <button class="btn btn-primary" href="" routerLinkActive="router-link-active" (click)="openDialog(row)"  translate>DELETE</button>
                                 </td>

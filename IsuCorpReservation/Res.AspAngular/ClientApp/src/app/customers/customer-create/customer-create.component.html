@@ -5,7 +5,7 @@
                 <div class="col-md-4 align-self-center">
                     <h6 translate style="color:grey; font-size: 10px; text-align: right; margin-top: 2px;"
                         routerLink="/customers-list" 
-                        hide="!getIsMobile()"><i>CLIENTS LIST</i></h6>
+                        [hidden]="!getIsMobile()"><i>CLIENTS LIST</i></h6>
                     <h4 style="color:red" translate>Create Client</h4>
                 </div>
                 <div class="col-md-5 align-self-center" [hidden]="getIsMobile()">

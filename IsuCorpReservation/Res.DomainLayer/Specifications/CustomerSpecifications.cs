@@ -3,6 +3,9 @@ using Res.DomainLayer.Specifications.Base;
 
 namespace AspnetRun.Core.Specifications
 {
+    /// <summary>
+    /// Customer include relational data
+    /// </summary>
     public class CustomerSpecifications : BaseSpecification<Customer>
     {
         public CustomerSpecifications(string customerName) 

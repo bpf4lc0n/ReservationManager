@@ -26,12 +26,12 @@ export class CustomerListComponent implements OnInit {
 
   dataSource : MatTableDataSource<CustomerViewModel>; 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, {static: false, read: true}) sort: MatSort;
   
   constructor(private customerService : CustomerService,
     private ctService : ContactTypeService,
     public dialog: MatDialog,
-    private deviceService: DeviceDetectorService) {  
+    private deviceService: DeviceDetectorService) {       
   }
 
   ngOnInit() {

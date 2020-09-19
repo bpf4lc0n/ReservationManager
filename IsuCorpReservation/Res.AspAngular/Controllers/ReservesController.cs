@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Res.ApplicationLayer.Interfaces;
 using Res.ApplicationLayer.Models;
@@ -44,6 +43,14 @@ namespace Res.AspAngular.Controllers
             return mapped;
         }
 
+        /// <summary>
+        /// Get reserves by server-side pagination
+        /// </summary>
+        /// <param name="field">Data base field name that will serve as Sort By value</param>
+        /// <param name="sortDirection">ASC o DESC, Sql mode</param>
+        /// <param name="pageIndex">Current page view</param>
+        /// <param name="pageSize">The number of elements to return</param>
+        /// <returns>A collection of <see cref="ReserveViewModel"/></returns>
         [HttpGet]
         [Route("[action]")]
         //string field, SortOrder sortDirection, int pageIndex, int pageSize
@@ -59,6 +66,10 @@ namespace Res.AspAngular.Controllers
             return mapped;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
         public int GetReservesCount()
@@ -82,9 +93,11 @@ namespace Res.AspAngular.Controllers
             _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
 
-        // PUT: api/Reserves/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="reserve"></param>
+       /// <returns></returns>
         [HttpPut("{id}")]
         public async Task PutReserve(ReserveViewModel reserve)
         {
@@ -96,7 +109,11 @@ namespace Res.AspAngular.Controllers
             _logger.LogInformation($"Entity successfully added - IndexPageService");
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task DeleteReserve([FromRoute] int id)
         {
