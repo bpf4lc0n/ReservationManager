@@ -1,7 +1,7 @@
-﻿using Res.DomainLayer.Models;
-using System;
+﻿
+using Microsoft.Data.SqlClient;
+using Res.DomainLayer.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Res.DomainLayer.Interfaces
@@ -11,6 +11,8 @@ namespace Res.DomainLayer.Interfaces
     /// </summary>
     public interface ICustomerRepository : IRepository<Customer>
     {
-        Task<IEnumerable<Reserve>> GetCustomerByName(string Name);
+        Task<IEnumerable<Customer>> GetCustomerByName(string Name);
+        Task<IEnumerable<Customer>> GetCustomerByPage(string field, SortOrder sortDirection, int pageIndex, int pageSize)
+        ;
     }
 }

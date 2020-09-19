@@ -39,9 +39,17 @@ p { color:red; }
   width: 100%;
   height: 100%;
 }
+
+.spinner-container{
+  align-content: center;
+}
   
   td, th {
     width: 25%;
+  }
+
+  th.mat-sort-header-sorted {
+    color: black;
   }
   
   

@@ -7,10 +7,8 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { CustomersComponent } from './customers/customers.component';
 import { CustomerListComponent } from './customers/customer-list/customer-list.component';
 import { CustomerEditComponent } from './customers/customer-edit/customer-edit.component';
-import { ReservesComponent } from './reserves/reserves.component';
 import { ReserveListComponent } from './reserves/reserve-list/reserve-list.component';
 import { ReserveEditComponent } from './reserves/reserve-edit/reserve-edit.component';
 import { CustomerService } from './services/customer.service';
@@ -22,9 +20,13 @@ import { DropDownDirective } from './shared/dropdown.directive';
 import { ContactTypeService } from './services/contacttype.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, MatToolbarModule, MatMenuModule, MatDialogModule, MatSpinner, MatProgressSpinnerModule, MatDatepickerModule, MatCardModule, MatProgressBarModule, MatSnackBarModule} from '@angular/material';
+import {MatNativeDateModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, 
+  MatSelectModule, MatGridListModule, MatInputModule, MatIconModule, 
+  MatToolbarModule, MatMenuModule, MatDialogModule, MatProgressSpinnerModule, 
+  MatDatepickerModule, MatCardModule, MatProgressBarModule, MatSnackBarModule, MatOptionModule, MatSortModule} from '@angular/material';
+
+  import { NgxPaginationModule } from 'ngx-pagination';
 
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -37,12 +39,10 @@ import { CustomerDeleteDialog } from './customers/customer-delete-dialog/custome
   declarations: [
     AppComponent,
     HeaderComponent,
-    HeaderMenuComponent,
-    CustomersComponent,
+    HeaderMenuComponent,    
     CustomerListComponent,
     CustomerCreateComponent,
-    CustomerEditComponent,
-    ReservesComponent,
+    CustomerEditComponent,    
     ReserveListComponent,
     ReserveEditComponent,
     ReserveCustomerCreateComponent,
@@ -63,6 +63,8 @@ import { CustomerDeleteDialog } from './customers/customer-delete-dialog/custome
     MatNativeDateModule,
     ReactiveFormsModule,
 
+    NgxPaginationModule,
+
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
@@ -78,7 +80,9 @@ import { CustomerDeleteDialog } from './customers/customer-delete-dialog/custome
     MatDatepickerModule,
     MatCardModule,
     MatSnackBarModule,
-
+    MatOptionModule,
+    MatSortModule,
+    
     TranslateModule.forRoot({
       loader:{
         provide : TranslateLoader,

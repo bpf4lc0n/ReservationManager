@@ -15,5 +15,9 @@ export class ReserveViewModel{
         this.restaurant = restaurant;
         this.customerId = custId;
     }
+
+    validated() : boolean {
+        return this.dateReserve >= new Date() && !this.restaurant;
+    }
 }
 

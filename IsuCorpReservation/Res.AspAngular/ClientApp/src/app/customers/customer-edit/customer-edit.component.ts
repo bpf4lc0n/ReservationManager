@@ -14,7 +14,7 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeViewModel[];
   customer : CustomerViewModel;
-  reserveCustomerForm : FormGroup ;  
+  customerForm : FormGroup ;  
   
   constructor(public fb : FormBuilder, 
     private customerService : CustomerService, 
@@ -28,7 +28,7 @@ export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeVi
 
     this.getContactType();
     
-    this.reserveCustomerForm = this.fb.group({
+    this.customerForm = this.fb.group({
       $key : new FormControl(null),
       fc_name : new FormControl('', Validators.required),
       fc_contacttype : new FormControl(''),
@@ -43,7 +43,7 @@ export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeVi
   getCustomers(id : number) {
     this.customerService.getCustomersById(id).subscribe(data => {
       this.customer = data; 
-      this.reserveCustomerForm.setValue({
+      this.customerForm.setValue({
         $key: data.id,
         fc_name : data.name,
         fc_contacttype: data.contactTypeId,
@@ -63,7 +63,7 @@ export class CustomerEditComponent implements OnInit {  ctTypes : CustomerTypeVi
    }
 
    submitForm() {
-    this.customerService.EditCustomer(this.customer.id, this.reserveCustomerForm.value)
+    this.customerService.EditCustomer(this.customer.id, this.customerForm.value)
       .subscribe(
         data => {
           this.openSnackBar('Customer edited');

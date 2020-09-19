@@ -4,6 +4,8 @@ import { ReserveViewModel } from "../models/reserve.model";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn : 'root',
@@ -43,6 +45,20 @@ export class ReserveService{
         return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves').pipe();
     }
 
+    getReservesPage(sortField : string, sortOrder : string, pageIndex : number, pageSize : number) : Observable<ReserveViewModel[]> {
+        let params = new HttpParams();
+        // string field, string sortDirection, int pageIndex, int pageSize
+        params = params.append('field', sortField);
+        params = params.append('sortDirection', sortOrder);
+        params = params.append('pageIndex', String(pageIndex));
+        params = params.append('pageSize', String(pageSize));
+        
+        return this.http.get<ReserveViewModel[]>(this.appUrl+'api/Reserves/ByPage', {params}).pipe(
+            map((reserves : ReserveViewModel[]) => reserves),
+            catchError(err=>throwError(err))
+        );
+    }
+
     getReserveById(id : number) : Observable<ReserveViewModel> {
         return this.http.get<ReserveViewModel>(this.appUrl+'api/Reserves/'+id);
     }
@@ -54,6 +70,12 @@ export class ReserveService{
         return this.http.post<ReserveViewModel>(this.appUrl +'api/Reserves',
             JSON.stringify(reserve), this.httpOptions).pipe()  
     }  
+
+    AddReserveDirect(res)  : Observable<ReserveViewModel>
+    { 
+        return this.http.post<ReserveViewModel>(this.appUrl +'api/Reserves',
+            JSON.stringify(res), this.httpOptions).pipe()  
+    } 
   
     EditReserve(id : number, res : ReserveViewModel)  
     {          

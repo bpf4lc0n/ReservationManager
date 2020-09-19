@@ -14,7 +14,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 export class CustomerCreateComponent implements OnInit {
   ctTypes : CustomerTypeViewModel[];
   customer : CustomerViewModel;
-  reserveCustomerForm : FormGroup ;  
+  customerForm : FormGroup ;  
   
   constructor(public fb : FormBuilder, 
     private customerService : CustomerService, 
@@ -26,20 +26,19 @@ export class CustomerCreateComponent implements OnInit {
 
     this.getContactType();
     
-    this.reserveCustomerForm = this.fb.group({
+    this.customerForm = this.fb.group({
       $key : new FormControl(null),
       fc_CustomerId : new FormControl(null),
       fc_name : new FormControl('', Validators.required),
       fc_contacttype : new FormControl(''),
-      fc_Birthday : new FormControl(new Date(), Validators.required),
+      fc_Birthday : new FormControl(new Date(), [Validators.required]),
       fc_Telephone : new FormControl('', [Validators.required, Validators.minLength(8)]),
       fc_Description : new FormControl('')
     })  
   }
 
   getContactType() {
-    this.ctService.getCustomerTypes().subscribe(data => {this.ctTypes = data; 
-      console.log('data', data); console.log('contact-type', this.ctTypes)});
+    this.ctService.getCustomerTypes().subscribe(data => this.ctTypes = data);
   }
 
   getColAdjusment():number{
@@ -47,7 +46,7 @@ export class CustomerCreateComponent implements OnInit {
    }
 
    submitForm() {
-    this.customerService.AddCustomer(this.reserveCustomerForm.value) 
+    this.customerService.AddCustomer(this.customerForm.value) 
     .subscribe(
       data => {
         this.openSnackBar('Customer added');

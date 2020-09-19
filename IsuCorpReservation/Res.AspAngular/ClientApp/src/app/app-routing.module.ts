@@ -1,17 +1,16 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ReservesComponent } from "./reserves/reserves.component";
-import { CustomersComponent } from "./customers/customers.component";
 import { ReserveCustomerCreateComponent } from "./reserves/reserve-customer-create/reserve-customer-create.component";
 import { CustomerEditComponent } from "./customers/customer-edit/customer-edit.component";
 import { ReserveStartComponent } from "./reserves/reserve-start/reserve-start.component";
 import { ReserveEditComponent } from "./reserves/reserve-edit/reserve-edit.component";
 import { CustomerCreateComponent } from "./customers/customer-create/customer-create.component";
 import { CustomerListComponent } from "./customers/customer-list/customer-list.component";
+import { ReserveListComponent } from "./reserves/reserve-list/reserve-list.component";
 
 const appRoutes : Routes =[
     { path: '', redirectTo: '/reserves-list', pathMatch: 'full' }, 
-    { path: 'reserves-list', component: ReservesComponent, children :[
+    { path: 'reserves-list', component: ReserveListComponent, children :[
         { path: '', component: ReserveStartComponent}
     ]},
     { path: 'reserve-create', component: ReserveCustomerCreateComponent},

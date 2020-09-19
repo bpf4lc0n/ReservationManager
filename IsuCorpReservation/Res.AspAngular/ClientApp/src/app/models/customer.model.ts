@@ -17,4 +17,8 @@ export class CustomerViewModel{
         this.description = desc;
         this.contactTypeId = (!cTypeId) ? 0 : cTypeId;
     }
+
+    validated() :boolean {
+        return this.dateBirth <= new Date() && !this.name && !this.telephone;
+    }
 }

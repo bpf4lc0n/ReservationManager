@@ -6,16 +6,15 @@
                     <h4 style="color:red" translate>Create Client</h4>
                 </div>
                 <div class="col-md-5 align-self-center" hide="!getIsMobile()">
-                    <h6 style="color:grey" >Lorem ipsum dolor sit amet consectetur 
-                        adipisicing elit. Aspernatur ipsam quam sed autem dolore vel, 
-                        alias tenetur, dignissimos tempore, rem quod totam?</h6>
+                    <h6 style="color:grey" >Lorem ipsum dolor sit amet, consectetur 
+                        adipisicing elit, sed do eiusmod tempor incididunt ut</h6>
                 </div>
                 <div class="col-md-3 align-self-center float-left">
                     <div class="container" center-h center-v hide="!getIsMobile()">
                     <button 
                         class="btn btn-primary" 
                         routerLink="/customers-list" 
-                        type="submit" translate>CIENTS LIST</button>
+                        type="submit" translate>CLIENTS LIST</button>
                     </div>
                 </div>    
             </div>
@@ -23,7 +22,7 @@
     </mat-card-header>
     <mat-card-content>
         <div class="container content">            
-            <form [formGroup]="reserveCustomerForm" (ngSubmit)="submitForm()" class="normal-form">
+            <form [formGroup]="customerForm" (ngSubmit)="submitForm()" class="normal-form">
                 <div class="from-group">
                     <div class="mat-elevation-z8">
                         <mat-grid-list cols="{{getColAdjusment()}}" rowHeight="90px">
@@ -31,7 +30,7 @@
                                 <div class="container">
                                     <input type="hidden" formControlName="$key">
                                     <mat-form-field appearance="outline">
-                                        <input formControlName="fc_name" matInput placeholder="Contact Name ...">
+                                        <input formControlName="fc_name" type="date" matInput placeholder="{{'Contact Name ...'| translate}}">
                                         <mat-icon matPrefix>supervisor_account</mat-icon>
                                         <mat-error translate>.error</mat-error>
                                     </mat-form-field>                           
@@ -41,9 +40,10 @@
                                 <div class="container">
                                     <mat-form-field appearance="outline">
                                         <mat-icon matPrefix>language</mat-icon>
-                                        <mat-select formControlName="fc_contacttype" appearance="outline">                            
-                                            <mat-option *ngFor="let cType of ctTypes" [value]="cType.Name">
-                                            {{cType.name}}                        
+                                        <mat-select formControlName="fc_contacttype" [(ngModel)]="customerForm.fc_contacttype" appearance="outline">                            
+                                            <mat-option *ngFor="let cType of ctTypes" 
+                                                [value]="cType.id">
+                                            {{cType.contactType}}                        
                                             </mat-option>
                                         </mat-select>    
                                     </mat-form-field>  
@@ -53,7 +53,7 @@
                             <mat-grid-tile>
                                 <div class="container">
                                     <mat-form-field appearance="outline">
-                                        <input formControlName="fc_Telephone" matInput placeholder="Phone">
+                                        <input formControlName="fc_Telephone" matInput placeholder="{{'Phone'| translate}}">
                                         <mat-icon matPrefix>phone</mat-icon>
                                     </mat-form-field>  
                                     <mat-error translate>.error</mat-error>         
@@ -62,7 +62,7 @@
                             <mat-grid-tile>
                                 <div class="container">
                                     <mat-form-field color="accent" appearance="outline">
-                                        <input formControlName="fc_Birthday" matInput [matDatepicker]="picker3" placeholder="Birth Date">                        
+                                        <input formControlName="fc_Birthday" matInput [matDatepicker]="picker3" placeholder="{{'Birth Date'| translate}}">                        
                                         <mat-datepicker-toggle matPrefix [for]="picker3"></mat-datepicker-toggle>
                                         <mat-datepicker #picker2 color="primary"></mat-datepicker>
                                     </mat-form-field>                     
@@ -71,7 +71,7 @@
                         </mat-grid-list>
                     </div> 
                     <div class="mat-elevation-z8" mat-elevation-z8-fill>
-                        <ckeditor data="Keep that Noise Down"></ckeditor>
+                        <ckeditor formControlName="fc_Description"></ckeditor>
                     </div>  
                     <div class="row justify-content-right">
                         <div class="col-11">
@@ -80,7 +80,7 @@
                             <button 
                                 class="btn btn-success" 
                                 type="submit"
-                                [disabled]="reserveCustomerForm.invalid"
+                                [disabled]="customerForm.invalid"
                                 translate>SEND</button>
                         </div>
                     </div> 

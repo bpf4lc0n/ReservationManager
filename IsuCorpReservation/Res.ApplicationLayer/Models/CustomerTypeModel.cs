@@ -1,12 +1,10 @@
-﻿using Res.DomainLayer.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Res.ApplicationLayer.Models.Base;
+using Res.DomainLayer.Entities.Base;
 
 namespace Res.ApplicationLayer.Models
 {
-    public class CustomerTypeModel : Entity
+    public class CustomerTypeModel : BaseModel
     {
-        string ContactType { get; set; }
+        public string ContactType { get; set; }
     }
 }

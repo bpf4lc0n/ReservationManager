@@ -1,6 +1,7 @@
 ﻿using Res.DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 
 namespace Res.Infra.DataLayer
 {
@@ -14,5 +15,6 @@ namespace Res.Infra.DataLayer
         public DbSet<Reserve> Reserves { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerType> CustomerTypes { get; set; }
+
     }
 }

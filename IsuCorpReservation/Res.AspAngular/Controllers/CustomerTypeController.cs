@@ -14,14 +14,12 @@ namespace Res.AspAngular.Controllers
     public class CustomerTypeController : ControllerBase
     {
         private readonly ICustomerTypeService _CustomerTypeAppService;
-        private readonly ILogger<CustomerTypeController> _logger;
         private readonly IMapper _mapper;
 
-        public CustomerTypeController(ICustomerTypeService CustomerTypeAppService, IMapper mapper, ILogger<CustomerTypeController> logger)
+        public CustomerTypeController(ICustomerTypeService CustomerTypeAppService, IMapper mapper)
         {
             _CustomerTypeAppService = CustomerTypeAppService ?? throw new ArgumentNullException(nameof(CustomerTypeAppService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         // GET: api/CustomerTypes

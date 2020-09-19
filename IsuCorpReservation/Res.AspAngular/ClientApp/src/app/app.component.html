@@ -1,37 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">   
-  <header>
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" id="navId">
-      <li class="nav-item">
-        <a href="#tab1Id" class="nav-link active" routerLink="/reserves-list" translate>Reservation List</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" routerLink="/customers-list" role="button" aria-haspopup="true" aria-expanded="false">Clients</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#tab2Id" routerLink="/customers-list">List</a>
-        </div>
-      </li>
-    </ul>
-    
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
-      <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
-      <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
-      <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
-      <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+<nav class="navbar navbar-expand-sm bg-primary" style="background-color: #e3f2fd">
+    <a class="navbar-brand" href="#" translate>Reservations Manager</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/reserves-list" translate>Reservations List<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/customers-list" translate>Clients</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" translate>Language</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a class="dropdown-item" (click)="changeLanguage('es')">ES</a>
+                    <a class="dropdown-item" (click)="changeLanguage('en')">EN</a>
+                </div>
+            </li>
+        </ul>
     </div>
-    
-    <script>
-      $('#navId a').click(e => {
-        e.preventDefault();
-        $(this).tab('show');
-      });
-    </script>
-    <app-header></app-header>    
-  </header>   
-  <body>
-      <router-outlet></router-outlet> 
-  </body>
-</html>
+</nav>
+<app-header></app-header>
+<router-outlet></router-outlet>

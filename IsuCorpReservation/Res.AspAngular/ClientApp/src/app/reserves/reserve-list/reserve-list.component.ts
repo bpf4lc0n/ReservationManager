@@ -1,21 +1,35 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReserveViewModel } from '../../models/reserve.model';
 import { ReserveService } from '../../services/reserve.service';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import {Sort} from '@angular/material/sort';
+import { ReserveSort } from 'src/app/models/reserveSort.model';
+import {tap, map} from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-reserve-list',
   templateUrl: './reserve-list.component.html',
   styleUrls: ['./reserve-list.component.css']
 })
-export class ReserveListComponent implements OnInit, OnDestroy {
+export class ReserveListComponent implements OnInit {
   Reserves : ReserveViewModel[];
-  sortedData: ReserveViewModel[];
+  dataSource : MatTableDataSource<ReserveViewModel>; 
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+
+  sortingSelected : ReserveSort;
+  sortingValues : ReserveSort[] = [
+    {sorting : 'By Date Ascending', direction : 'ASC', field : 'DateReserve', option : 1 },
+    {sorting : 'By Date Descending', direction : 'DESC', field : 'DateReserve', option : 2},
+    {sorting : 'By Alphabetic Ascending', direction : 'ASC', field : 'Restaurant', option : 3},
+    {sorting : 'By Alphabetic Descending', direction : 'DESC', field : 'Restaurant', option : 4},
+    {sorting : 'By Ranking', direction : 'ASC', field : 'Ranking', option : 5}
+  ]
+
+  listForm   : FormGroup;
+  config: any;
 
   selectedColumn : string;
   pos : number;
-  dataSource: MatTableDataSource<ReserveViewModel>;
 
   columnDefinitions = [
     { def: 'Icon', showMobile: false },
@@ -25,11 +39,23 @@ export class ReserveListComponent implements OnInit, OnDestroy {
     { def: 'Edit', showMobile: true },
     ];
 
-  //@ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
-  //@ViewChild(MatSort, {static:false}) sort: MatSort;
 
-  constructor(private reserveService : ReserveService) { 
-    this.getReserves();
+  constructor(private reserveService : ReserveService,
+    public fb: FormBuilder) { 
+
+      this.sortingSelected = new ReserveSort('By Date Ascending', 'ASC', 'DateReserve', 1);
+
+      this.listForm = this.fb.group({
+        fc_SortValue : new FormControl('')
+      })
+
+      this.config = {
+        itemsPerPage: 10,
+        currentPage: 1,
+        totalItems: 300
+      };
+      
+      this.getReserves();
   }
 
   ngOnInit() {
@@ -37,18 +63,26 @@ export class ReserveListComponent implements OnInit, OnDestroy {
   }
 
   getReserves() {
-    this.reserveService.getReserves().subscribe((data) => {  this.Reserves = data; this.sortedData = data})  
-     ,err=>{console.log(err);  
+    this.reserveService.getReservesPage(this.sortingSelected.field, this.sortingSelected.direction, this.config.currentPage, this.config.itemsPerPage).pipe(
+      tap(res=>console.log(res)),
+      map((resData : ReserveViewModel[])=> {this.Reserves = resData; this.dataSource = new MatTableDataSource(resData); this.dataSource.paginator = this.paginator; this.dataSource.paginator.length = 300;})
+    ).subscribe()  
+     , err=>{console.log(err);  
      } 
   }
 
   ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }  
 
-  ngOnDestroy() : void {
-      
+  pageChanged(event){
+    this.config.currentPage = event;
+    console.log('page ' + event)
+  }
+
+  onPaginationChange(event : PageEvent){
+    this.config.currentPage = event.pageIndex + 1;
+    this.getReserves();
   }
 
   onFavorite(res : ReserveViewModel){
@@ -74,10 +108,11 @@ export class ReserveListComponent implements OnInit, OnDestroy {
     .map(cd => cd.def);
     }
 
-  changeSortedColumn() {
-    const sortState: Sort = {active: this.selectedColumn, direction: 'asc'};
-    //this.sort.active = sortState.active;
-    //this.sort.direction = sortState.direction;
-    //this.sort.sortChange.emit(sortState);    
+  changeSortedColumn(event: Event) { 
+    console.log(this.listForm.value.fc_SortValue);
+    if (this.listForm.value.fc_SortValu !== this.sortingSelected.option) {
+      this.sortingSelected = this.sortingValues[this.listForm.value.fc_SortValue - 1];
+      this.getReserves();
+    }
   }
 }

@@ -1,4 +1,6 @@
-﻿using Res.ApplicationLayer.Interfaces;
+﻿
+using Microsoft.Data.SqlClient;
+using Res.ApplicationLayer.Interfaces;
 using Res.ApplicationLayer.Mapper;
 using Res.ApplicationLayer.Models;
 using Res.DomainLayer.Interfaces;
@@ -88,15 +90,22 @@ namespace Res.ApplicationLayer.Services
         {
             var existingEntity = await _CustomerRepository.GetByIdAsync(CustomerModel.Id);
             if (existingEntity != null)
-                throw new ApplicationException($"{CustomerModel.ToString()} with this id already exists");
+                throw new ApplicationException($"{CustomerModel} with this id already exists");
         }
 
         private void ValidateCustomerIfNotExist(CustomerModel CustomerModel)
         {
             var existingEntity = _CustomerRepository.GetByIdAsync(CustomerModel.Id);
             if (existingEntity == null)
-                throw new ApplicationException($"{CustomerModel.ToString()} with this id is not exists");
+                throw new ApplicationException($"{CustomerModel} with this id is not exists");
         }
 
+
+        public async Task<CustomerModel> GetCustomerByPage(string sortField, SortOrder sortDirection, int pageIndex, int pageSize)
+        {
+            var CustomerList = await _CustomerRepository.GetCustomerByPage(sortField, sortDirection, pageIndex, pageSize);
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CustomerModel>>(CustomerList);
+            return (CustomerModel)mapped;
+        }
     }
 }

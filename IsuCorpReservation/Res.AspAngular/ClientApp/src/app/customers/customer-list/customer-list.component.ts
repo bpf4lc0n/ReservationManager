@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { CustomerViewModel } from '../../models/customer.model';
 import { CustomerService } from '../../services/customer.service';
 import { CustomerDeleteDialog } from '../customer-delete-dialog/customer-delete-dialog.component';
@@ -17,23 +17,29 @@ export class CustomerListComponent implements OnInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  //@ViewChild(MatPaginator) paginator: MatPaginator;
-  //@ViewChild(MatSort) sort: MatSort;
+  dataSource : MatTableDataSource<CustomerViewModel>; 
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   
   constructor(private customerService : CustomerService,
-    public dialog: MatDialog) {     
+    public dialog: MatDialog) {  
   }
 
   ngOnInit() {
-    this.getCustomers();
+    this.getCustomers();    
   }
 
   ngAfterViewInit(){
-    //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);    
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getCustomers() {
-    this.customerService.getCustomers().subscribe(data => {this.customers = data; console.log('data', data); console.log('customers', this.customers)});
+    this.customerService.getCustomers().subscribe(data => {
+      this.customers = data; 
+      this.dataSource = new MatTableDataSource<CustomerViewModel>(this.customers); 
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;});
   }
 
   openDialog(customer : CustomerViewModel){

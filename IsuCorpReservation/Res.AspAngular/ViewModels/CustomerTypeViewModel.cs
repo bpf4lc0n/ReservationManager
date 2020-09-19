@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Res.AspAngular.ViewModels
+﻿namespace Res.AspAngular.ViewModels
 {
-    public class CustomerTypeViewModel
+    public class CustomerTypeViewModel : BaseViewModel
     {
-        string ContactType { get; set; }
+        public string ContactType { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Res.ApplicationLayer.Interfaces;
+﻿
+using Res.ApplicationLayer.Interfaces;
 using Res.ApplicationLayer.Mapper;
 using Res.ApplicationLayer.Models;
 using Res.DomainLayer.Interfaces;
@@ -25,10 +26,18 @@ namespace Res.ApplicationLayer.Services
 
         public async Task<IEnumerable<ReserveModel>> GetReserveList()
         {
-            var ReserveList = await _ReserveRepository.GetReserveListAsync();
+            var ReserveList = await _ReserveRepository.GetAllAsync();
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<ReserveModel>>(ReserveList);
             return mapped;
         }
+
+        public async Task<IEnumerable<ReserveModel>> GetReserveByPage(string field, string sortDirection, int pageIndex, int pageSize)
+        {
+            var ReserveList = await _ReserveRepository.GetReserveByPage(field, sortDirection, pageIndex, pageSize);
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ReserveModel>>(ReserveList);
+            return mapped;
+        }
+
 
         public async Task<ReserveModel> GetReserveById(int ReserveId)
         {
@@ -81,14 +90,14 @@ namespace Res.ApplicationLayer.Services
         {
             var existingEntity = await _ReserveRepository.GetByIdAsync(ReserveModel.Id);
             if (existingEntity != null)
-                throw new ApplicationException($"{ReserveModel.ToString()} with this id already exists");
+                throw new ApplicationException($"{ReserveModel} with this id already exists");
         }
 
         private void ValidateReserveIfNotExist(ReserveModel ReserveModel)
         {
             var existingEntity = _ReserveRepository.GetByIdAsync(ReserveModel.Id);
             if (existingEntity == null)
-                throw new ApplicationException($"{ReserveModel.ToString()} with this id is not exists");
+                throw new ApplicationException($"{ReserveModel} with this id is not exists");
         }
     }
 }

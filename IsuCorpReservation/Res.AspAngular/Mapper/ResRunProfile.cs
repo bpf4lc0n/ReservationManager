@@ -10,12 +10,14 @@ namespace Res.AspAngular.Mapper
         public ResRunProfile()
         {
             CreateMap<ReserveModel, ReserveViewModel>();
-            CreateMap<CustomerModel, CustomerViewModel>();
-            CreateMap<CustomerTypeModel, CustomerTypeViewModel>();
-
             CreateMap<ReserveViewModel, ReserveModel>();
-            CreateMap<CustomerTypeViewModel, CustomerTypeModel>();
+
+            CreateMap<CustomerModel, CustomerViewModel>();
             CreateMap<CustomerViewModel, CustomerModel>();
+
+            CreateMap<CustomerTypeModel, CustomerTypeViewModel>();            
+            CreateMap<CustomerTypeViewModel, CustomerTypeModel>();
+            
         }
     }
 }

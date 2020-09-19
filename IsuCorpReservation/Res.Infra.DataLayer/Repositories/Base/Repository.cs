@@ -42,7 +42,14 @@ namespace Res.Infra.DataLayer.Repository.Base
 
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+            try
+            {
+                return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+            }
+            catch
+            {
+                return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+            }
         }
 
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true)
@@ -73,6 +80,35 @@ namespace Res.Infra.DataLayer.Repository.Base
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex">Pagination starts at 1, so it will remove 1 from this value</param>
+        /// <param name="pageSize"></param>
+        /// <param name="disableTracking"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<T>> GetPageAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int pageIndex = 1, int pageSize = 5, bool disableTracking = true)
+        {
+            IQueryable<T> query = _dbContext.Set<T>();
+            if (disableTracking) query = query.AsNoTracking();
+
+            if (predicate != null) query = query.Where(predicate);
+
+            if (pageIndex > 0) pageIndex -= 1;
+
+            if (pageIndex != 0 && pageSize != 0)
+                query = query
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize);
+
+            if (orderBy != null)
+                return await orderBy(query).ToListAsync();
+
+            return await query.ToListAsync();
+        }
+
         public virtual async Task<T> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
@@ -86,7 +122,9 @@ namespace Res.Infra.DataLayer.Repository.Base
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception error) 
-            {  }
+            {
+                throw new ApplicationException($"Error: {error.Message}");
+            }
             return entity;
         }
 
