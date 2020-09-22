@@ -57,7 +57,7 @@ export class ReserveCustomerCreateComponent implements OnInit {
     // if is a know customer must be check first
     if (this.customerExistent) {
         // if customer keep tha same (name is the only field to take into consideration in this case)
-        // the customer other fields will not be updated with the data in current form
+        // the customer other fields will not be updated with the data in the current form
         if (this.compareValue(this.customerExistent.name, this.customer.name)) {
           // reference to the know customer
           reserve.customerId = this.customerExistent.id;
@@ -91,7 +91,7 @@ export class ReserveCustomerCreateComponent implements OnInit {
       this.customerService.AddCustomerDirect(this.customer).subscribe(data => {
         this.customerService.getCustomerByName(this.customer.name).subscribe(newCustomer => {
           this.customerExistent = newCustomer[0];
-          // if successfully added,them add the reserve
+          // if successfully added,then add the reserve
           reserve.customerId = newCustomer[0].id;
           this.AddReserve(reserve);
         })      
@@ -156,6 +156,7 @@ export class ReserveCustomerCreateComponent implements OnInit {
           if(this.customerExistent) {
             this.customer.telephone = this.customerExistent.telephone;
             this.customer.dateBirth = this.customerExistent.dateBirth;
+            this.customer.contactTypeId = this.customerExistent.contactTypeId;
             }
            });
       }
