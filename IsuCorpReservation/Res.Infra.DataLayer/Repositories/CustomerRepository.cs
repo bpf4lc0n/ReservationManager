@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Res.DomainLayer.Interfaces;
 using Res.DomainLayer.Models;
 using Res.Infra.DataLayer.Repository.Base;

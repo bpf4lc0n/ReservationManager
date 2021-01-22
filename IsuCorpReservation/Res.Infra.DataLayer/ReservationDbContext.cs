@@ -1,7 +1,5 @@
-﻿using Res.DomainLayer.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Res.DomainLayer.Models;
 
 namespace Res.Infra.DataLayer
 {

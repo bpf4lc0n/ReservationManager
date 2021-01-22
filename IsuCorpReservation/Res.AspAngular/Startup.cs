@@ -127,7 +127,7 @@ namespace Res.AspAngular
 
             // use real database
            services.AddDbContext<ReservationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("Res.Infra.DataLayer")));
+            options.UseNpgsql(Configuration["ConnectionStrings:Default"], b => b.MigrationsAssembly("Res.Infra.DataLayer")));
         }
     }
 }

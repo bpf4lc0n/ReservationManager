@@ -1,5 +1,5 @@
 ﻿
-using Microsoft.Data.SqlClient;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Res.DomainLayer.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
