@@ -1,4 +1,5 @@
 ﻿
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Res.ApplicationLayer.Interfaces;
 using Res.ApplicationLayer.Mapper;
 using Res.ApplicationLayer.Models;
@@ -33,7 +34,8 @@ namespace Res.ApplicationLayer.Services
 
         public async Task<IEnumerable<ReserveModel>> GetReserveByPage(string field, string sortDirection, int pageIndex, int pageSize)
         {
-            var ReserveList = await _ReserveRepository.GetReserveByPage(field, sortDirection, pageIndex, pageSize);
+            var sortingBy = sortDirection == "ASC" ? SortOrder.Ascending : SortOrder.Descending;
+            var ReserveList = await _ReserveRepository.GetReserveByPageLinq(field, sortingBy, pageIndex, pageSize);
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<ReserveModel>>(ReserveList);
             return mapped;
         }

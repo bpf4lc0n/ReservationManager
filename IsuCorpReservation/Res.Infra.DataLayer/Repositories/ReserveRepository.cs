@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Res.Infra.DataLayer.Repositories
 {
@@ -46,24 +46,26 @@ namespace Res.Infra.DataLayer.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Reserve>> GetReserveByPage(string field, string sortDirection, int pageIndex, int pageSize)
         {
-            try
-            {
-                
-                var pageIndexParams = new SqlParameter("pageIndex", pageIndex);
-                var pageSizeParams = new SqlParameter("pageSize", pageSize);
-                var sortDirectionParams = new SqlParameter("sortDirection", sortDirection);
-                var fieldParams = new SqlParameter("sortField", field);
-                
-                return await _dbContext.Reserves
-                   .FromSqlRaw("EXECUTE dbo.Usp_GetReservesByPage @pageIndex,@pageSize,@sortField,@sortDirection", 
-                   pageIndexParams, pageSizeParams, fieldParams, sortDirectionParams)
-                   .ToListAsync();
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-            
+            //try
+            //{
+
+            //    var pageIndexParams = new SqlParameter("pageIndex", pageIndex);
+            //    var pageSizeParams = new SqlParameter("pageSize", pageSize);
+            //    var sortDirectionParams = new SqlParameter("sortDirection", sortDirection);
+            //    var fieldParams = new SqlParameter("sortField", field);
+
+            //    return await _dbContext.Reserves
+            //       .FromSqlRaw("EXECUTE dbo.Usp_GetReservesByPage @pageIndex,@pageSize,@sortField,@sortDirection", 
+            //       pageIndexParams, pageSizeParams, fieldParams, sortDirectionParams)
+            //       .ToListAsync();
+            //}
+            //catch (Exception error)
+            //{
+            //    throw error;
+            //}
+
+            throw new Exception();
+
         }
 
         /// <summary>
